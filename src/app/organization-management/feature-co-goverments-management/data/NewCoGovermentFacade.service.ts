@@ -1,11 +1,13 @@
 import { computed, inject, Injectable } from '@angular/core';
-import { CoGoverment } from '@organization-management/data/interfaces/CoGoverment';
-import { CoGovermentService } from '@organization-management/data/services/CoGoverment.service';
-import { CoGovermentTypeService } from '@organization-management/data/services/CoGovermentType.service';
-import { CoGovermentVotingTypeService } from '@organization-management/data/services/CoGovermentVotingType.service';
-import { DependencyService } from '@organization-management/data/services/Dependency.service';
-import { OfficeService } from '@organization-management/data/services/Office.service';
-import { PopulationService } from '@organization-management/data/services/Population.service';
+import {
+  CoGovermentService,
+  CoGovermentTypeService,
+  CoGovermentVotingTypeService,
+  DependencyService,
+  OfficeService,
+  PopulationService,
+} from '../../data/services';
+import { CoGoverment } from '../../data/interfaces';
 
 @Injectable({
   providedIn: 'root',

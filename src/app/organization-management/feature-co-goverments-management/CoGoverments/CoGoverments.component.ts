@@ -9,7 +9,7 @@ import {
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoGoverment } from '@electoral-events/interfaces/elective-office-by-co-goverment.interface';
-import { CoGovermentService } from '@organization-management/data/services/CoGoverment.service';
+
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -17,6 +17,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Table, TableModule } from 'primeng/table';
+import { CoGovermentService } from '../../data/services';
 
 @Component({
   selector: 'app-co-goverments',

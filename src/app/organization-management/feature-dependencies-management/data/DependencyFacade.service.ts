@@ -1,6 +1,5 @@
 import { computed, inject, Injectable } from '@angular/core';
-import { DependencyService } from '@organization-management/data/services/Dependency.service';
-import { DependencyTypeService } from '@organization-management/data/services/DependencyType.service';
+import { DependencyService, DependencyTypeService } from '../../data/services';
 
 @Injectable({
   providedIn: 'root',

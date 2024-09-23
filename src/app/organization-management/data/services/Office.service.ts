@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { Office } from '@organization-management/data/interfaces/Office';
 import { delay } from 'rxjs';
+import { Office } from '../interfaces';
 
 // state interface
 interface OfficeServiceState {

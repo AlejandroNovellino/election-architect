@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { PopulationType } from '@organization-management/data/interfaces/Population';
 import { delay } from 'rxjs';
+import { PopulationType } from '../interfaces';
 
 // state interface
 interface PopulationServiceState {
