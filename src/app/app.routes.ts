@@ -163,21 +163,21 @@ export const routes: Routes = [
         path: 'population',
         loadComponent: () =>
           import(
-            '@organization-management/feature-population-managment/PopulationTypes/PopulationTypes.component'
+            './organization-management/feature-population-managment/PopulationTypes/PopulationTypes.component'
           ),
       },
       {
         path: 'dependency',
         loadComponent: () =>
           import(
-            '@organization-management/feature-dependencies-management/Dependencies/Dependencies.component'
+            './organization-management/feature-dependencies-management/Dependencies/Dependencies.component'
           ),
       },
       {
         path: 'office',
         loadComponent: () =>
           import(
-            '@organization-management/feature-office-management/Offices/Offices.component'
+            './organization-management/feature-office-management/Offices/Offices.component'
           ),
       },
       {
@@ -185,7 +185,7 @@ export const routes: Routes = [
         title: 'Co-Gobiernos',
         loadComponent: () =>
           import(
-            '@organization-management/feature-co-goverments-management/featureCoGovermentsManagement.component'
+            './organization-management/feature-co-goverments-management/featureCoGovermentsManagement.component'
           ),
         children: [
           { path: '', redirectTo: 'all', pathMatch: 'full' },
@@ -193,28 +193,28 @@ export const routes: Routes = [
             path: 'types',
             loadComponent: () =>
               import(
-                '@organization-management/feature-co-goverments-management/CoGovermentTypes/CoGovermentTypes.component'
+                './organization-management/feature-co-goverments-management/CoGovermentTypes/CoGovermentTypes.component'
               ),
           },
           {
             path: 'all',
             loadComponent: () =>
               import(
-                '@organization-management/feature-co-goverments-management/CoGoverments/CoGoverments.component'
+                './organization-management/feature-co-goverments-management/CoGoverments/CoGoverments.component'
               ),
           },
           {
             path: 'detail/:id',
             loadComponent: () =>
               import(
-                '@organization-management/feature-co-goverments-management/InfoCoGoverment/InfoCoGoverment.component'
+                './organization-management/feature-co-goverments-management/InfoCoGoverment/InfoCoGoverment.component'
               ),
           },
           {
             path: 'new',
             loadComponent: () =>
               import(
-                '@organization-management/feature-co-goverments-management/NewCoGoverment/NewCoGoverment.component'
+                './organization-management/feature-co-goverments-management/NewCoGoverment/NewCoGoverment.component'
               ),
           },
         ],
@@ -224,14 +224,14 @@ export const routes: Routes = [
         path: 'electoral-activities',
         loadComponent: () =>
           import(
-            '@organization-management/feature-electoral-activities-management/ElectoralActivities/ElectoralActivities.component'
+            './organization-management/feature-electoral-activities-management/ElectoralActivities/ElectoralActivities.component'
           ),
       },
       {
         path: 'activities-responsables',
         loadComponent: () =>
           import(
-            '@organization-management/feature-responsibles-management/ActivityResponsible/ActivityResponsible.component'
+            './organization-management/feature-responsibles-management/ActivityResponsible/ActivityResponsible.component'
           ),
       },
       {
