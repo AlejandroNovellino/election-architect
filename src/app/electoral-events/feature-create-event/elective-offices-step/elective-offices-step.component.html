@@ -1,0 +1,48 @@
+@if (isLoading()) {
+
+<div class="flex justify-content-center">
+  <p-progressSpinner ariaLabel="loading" />
+</div>
+
+} @else {
+
+<p-toast key="chargesAdded"></p-toast>
+<p-toast key="chargesRemoved"></p-toast>
+
+<div class="flex flex-wrap">
+  <div class="md:col-6 col-12">
+    <add-elective-offices-form
+      [entityRestored]="restoreEntityOnForm()"
+      (onSubmitSelectedCharges)="setSelectedCharges($event)"
+    ></add-elective-offices-form>
+  </div>
+
+  <div class="md:col-6 col-12">
+    <elective-offices-selected
+      [currentSelection]="currentSelection"
+      (onRemoveCharges)="removeCharges($event)"
+    ></elective-offices-selected>
+  </div>
+</div>
+
+<div class="flex justify-content-end flex-wrap">
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Atrás"
+    class="p-button-raised p-button-danger m-2"
+    (click)="goBack()"
+  ></button>
+  <button
+    pButton
+    pRipple
+    type="submit"
+    label="Siguiente"
+    class="p-button-raised ml-2 m-2"
+    [disabled]="currentSelection.length === 0"
+    (click)="submitCharges()"
+  ></button>
+</div>
+
+}

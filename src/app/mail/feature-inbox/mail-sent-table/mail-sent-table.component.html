@@ -1,0 +1,247 @@
+<p-table
+  #dt
+  [value]="mails"
+  responsiveLayout="scroll"
+  [rows]="20"
+  [globalFilterFields]="[
+    'from',
+    'title',
+    'message',
+    'requestType',
+    'requestStatus'
+  ]"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [(selection)]="selectedMails"
+  selectionMode="multiple"
+  [rowHover]="true"
+  dataKey="id"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+>
+  <!-- Caption -->
+  <ng-template pTemplate="caption">
+    <div
+      class="flex flex-wrap align-items-center justify-content-between gap-3"
+    >
+      <!-- Three buttons -->
+      <div class="flex gap-2 align-items-center">
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-refresh"
+          class="p-button-rounded p-button-text p-button-plain ml-4"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-ellipsis-v"
+          class="p-button-rounded p-button-text p-button-plain ml-3"
+          (click)="menu.toggle($event)"
+        ></button>
+        <p-menu
+          #menu
+          [model]="menuItems"
+          [appendTo]="dt"
+          [popup]="true"
+        ></p-menu>
+      </div>
+      <!-- Search bar -->
+      <span class="flex gap-2 align-items-center w-6">
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="onGlobalFilter(dt, $event)"
+            placeholder="Buscar"
+            class="w-full"
+          /> </span
+      ></span>
+    </div>
+  </ng-template>
+  <!-- Header -->
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem"></th>
+      <th style="width: 3rem"></th>
+      <th style="width: 3rem"></th>
+      <th style="width: 3rem"></th>
+      <th pSortableColumn="from">
+        Usuario <p-sortIcon field="from"></p-sortIcon>
+      </th>
+      <th style="width: 3rem"></th>
+      <!--
+      <th pSortableColumn="requestType">
+        Request type <p-sortIcon field="requestType"></p-sortIcon>
+      </th>
+      <th pSortableColumn="requestStatus">
+        Status <p-sortIcon field="requestStatus"></p-sortIcon>
+      </th>
+      -->
+      <th pSortableColumn="date">
+        Recibido <p-sortIcon field="date"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <!-- Body -->
+  <ng-template pTemplate="body" let-mail>
+    <tr
+      (mouseenter)="toggleOptions($event, options, date)"
+      (mouseleave)="toggleOptions($event, options, date)"
+      (click)="onRowSelect(mail.id)"
+      class="cursor-pointer"
+      [ngClass]="{
+        'bg-gray-200 hover:surface-hover': !mail.read,
+      }"
+    >
+      <!-- Checkbox -->
+      <td style="width: 4rem" class="pl-3">
+        <p-tableCheckbox
+          [value]="mail"
+          (click)="$event.stopPropagation()"
+          (touchend)="$event.stopPropagation()"
+        ></p-tableCheckbox>
+      </td>
+      <!-- Star -->
+      @if (!mail.trash && !mail.spam) {
+      <td style="width: 4rem">
+        <span
+          (click)="onStar($event, mail.id)"
+          (touchend)="onStar($event, mail.id)"
+          class="cursor-pointer"
+        >
+          <i
+            class="pi pi-fw text-xl"
+            [ngClass]="{
+              'pi-star-fill': mail.starred,
+              'pi-star': !mail.starred
+            }"
+          ></i>
+        </span>
+      </td>
+      }
+      <!-- Bookmark -->
+      @if (!mail.trash && !mail.spam) {
+      <td style="width: 4rem">
+        <span
+          (click)="onBookmark($event, mail.id)"
+          (touchend)="onBookmark($event, mail.id)"
+          class="cursor-pointer"
+        >
+          <i
+            class="pi pi-fw text-xl"
+            [ngClass]="{
+              'pi-bookmark-fill': mail.important,
+              'pi-bookmark': !mail.important
+            }"
+          ></i>
+        </span>
+      </td>
+      }
+      <!-- Avatar -->
+      <td style="min-width: 4rem">
+        <p-avatar
+          [image]="
+            mail.image
+              ? 'assets/demo/images/avatar/' + mail.image
+              : 'assets/layout/images/avatar.png'
+          "
+        ></p-avatar>
+      </td>
+      <!-- From who is the mail or to who is the mail -->
+      <td style="min-width: 12rem" class="text-900 font-semibold">
+        {{ mail.from || mail.to }}
+      </td>
+      <!-- Subject -->
+      <td style="min-width: 12rem">
+        <span
+          class="font-medium white-space-nowrap overflow-hidden text-overflow-ellipsis block"
+          style="max-width: 30rem"
+        >
+          {{ mail.title }}
+        </span>
+      </td>
+      <!--  
+      Type of request 
+      @if (mail.requestType) {
+      <td style="min-width: 12rem" class="font-bold">
+        <div
+          class="border-round text-center p-2"
+          [ngClass]="mailService.getRequestTypeColor(mail.requestType)"
+        >
+          {{ mail.requestType }}
+        </div>
+      </td>
+      }
+      Status of request
+      @if (mail.requestStatus) {
+      <td style="min-width: 12rem">
+        <p-tag
+          [severity]="mailService.getRequestStatusSeverity(mail.requestStatus)"
+          [value]="mail.requestStatus"
+        ></p-tag>
+      </td>
+      }
+      -->
+      <!-- Date -->
+      <td style="min-width: 10rem">
+        <div class="flex justify-content-end w-full px-0">
+          <span #date class="text-700 font-semibold white-space-nowrap">
+            {{ mail.date }}
+          </span>
+          <!-- Buttons when hover -->
+          <div style="display: none" #options>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-inbox"
+              class="h-2rem w-2rem mr-2"
+              (click)="onArchive($event, mail.id)"
+              pTooltip="Archive"
+              tooltipPosition="top"
+              type="button"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-reply"
+              class="p-button-secondary h-2rem w-2rem mr-2"
+              (click)="onReply($event, mail)"
+              pTooltip="Reply"
+              tooltipPosition="top"
+              type="button"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-danger h-2rem w-2rem"
+              (click)="onTrash($event, mail)"
+              pTooltip="Trash"
+              tooltipPosition="top"
+              type="button"
+            ></button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  [(visible)]="dialogVisible"
+  (onHide)="dialogVisible = false"
+  [closable]="true"
+  header="New Message"
+  [modal]="true"
+  styleClass="mx-3 sm:mx-0 sm:w-full md:w-8 lg:w-6"
+  contentStyleClass="border-round-bottom border-top-1 surface-border p-0"
+>
+  <app-mail-reply
+    [content]="mail"
+    (hide)="dialogVisible = false"
+  ></app-mail-reply>
+</p-dialog>

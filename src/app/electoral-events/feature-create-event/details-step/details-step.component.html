@@ -1,0 +1,112 @@
+<h2 class="mt-5">Información General</h2>
+@if (isLoading()) {
+<div class="flex justify-content-center">
+  <p-progressSpinner ariaLabel="loading" />
+</div>
+}@else {
+<p-toast key="errorStartingDraft"></p-toast>
+<form [formGroup]="detailsForm">
+  <div class="grid p-fluid mt-5">
+    <div class="col-12 md:col-6">
+      <h5>Título</h5>
+      <span class="p-float-label">
+        <input
+          id="float-input"
+          type="text"
+          pInputText
+          formControlName="title"
+          [ngClass]="ngErrorClass('title')"
+        />
+        <label for="float-input">Título</label>
+      </span>
+      @if(detailsForm.get('title')!.touched &&
+      detailsForm.get('title')!.invalid){
+      <small class="p-error">
+        {{ getFieldError("title") }}
+      </small>
+      }
+
+      <h5>Descripción</h5>
+      <textarea
+        rows="5"
+        cols="30"
+        placeholder="Descripción del evento electoral"
+        pInputTextarea
+        formControlName="description"
+        [ngClass]="ngErrorClass('description')"
+      ></textarea>
+      @if(detailsForm.get('description')!.touched &&
+      detailsForm.get('description')!.invalid){
+      <small class="p-error">
+        {{ getFieldError("description") }}
+      </small>
+      }
+    </div>
+    <div class="col-12 md:col-6">
+      <h5>Fecha de inicio</h5>
+      <p-calendar
+        [showIcon]="true"
+        [minDate]="currentDate"
+        inputId="icon"
+        formControlName="startingDate"
+        [placeholder]="
+          detailsForm.get('startingDate')?.value?.toString() ||
+          'Seleccione una fecha de inicio'
+        "
+        [ngClass]="ngErrorClass('startingDate')"
+      ></p-calendar>
+      @if(detailsForm.get('startingDate')!.touched &&
+      detailsForm.get('startingDate')!.invalid){
+      <small class="p-error">
+        {{ getFieldError("startingDate") }}
+      </small>
+      }
+
+      <h5>Tipo de Elección</h5>
+      <p-dropdown
+        [options]="electionTypes()"
+        optionLabel="name"
+        [placeholder]="
+          detailsForm.get('electionType')?.value?.name ||
+          'Seleccione un tipo de elección'
+        "
+        [showClear]="true"
+        formControlName="electionType"
+        [ngClass]="ngErrorClass('electionType')"
+      ></p-dropdown>
+      @if(detailsForm.get('electionType')!.touched &&
+      detailsForm.get('electionType')!.invalid){
+      <small class="p-error">
+        {{ getFieldError("electionType") }}
+      </small>
+      }
+    </div>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Cancelar"
+      class="p-button-raised p-button-danger"
+      (click)="cancelCreation()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      type="button"
+      (click)="onOpenDialog()"
+      label="Siguiente"
+      class="p-button-raised ml-2"
+      [disabled]="!detailsForm.valid"
+    ></button>
+  </div>
+</form>
+
+<details-start-draft-dialog
+  [isDialogVisible]="isVisible()"
+  (onCancel)="onCloseDialog()"
+  (onSubmit)="submitGeneralInfo()"
+></details-start-draft-dialog>
+}

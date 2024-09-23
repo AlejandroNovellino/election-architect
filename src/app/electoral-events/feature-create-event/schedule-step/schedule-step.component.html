@@ -1,0 +1,72 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <p-toast key="activityDeleted"></p-toast>
+      <p-toast key="activityAdded"></p-toast>
+      <p-toast key="activityEdited"></p-toast>
+
+      <activity-schedule-table
+        [currentActivities]="currentActivities()"
+        (onDeleteActivity)="openDeleteActivityDialog($event)"
+        (onEditActivity)="onEditActivity($event)"
+      ></activity-schedule-table>
+
+      <div class="flex justify-content-end">
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Añadir nueva actividad"
+          class="p-button-raised p-button-success mt-5"
+          (click)="onOpenDialog()"
+        ></button>
+      </div>
+
+      <div class="flex justify-content-end mt-5">
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Atrás"
+          class="p-button-raised p-button-danger"
+          (click)="goBack()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="submit"
+          label="Siguiente"
+          class="p-button-raised ml-2"
+          [disabled]="currentActivities().length < 2"
+          (click)="submitSchedule()"
+        ></button>
+      </div>
+    </div>
+
+    <schedule-calendar [activities]="currentActivities()"></schedule-calendar>
+
+    <add-activity-dialog
+      [openDialog]="openDialog()"
+      [minDate]="startingDate"
+      (onCloseDialog)="closeDialog()"
+      (onSubmitForm)="addNewActivityToSchedule($event)"
+    ></add-activity-dialog>
+
+    @if (activityToEdit()) {
+    <edit-activity-dialog
+      [openDialog]="openEditDialog()"
+      [minDate]="startingDate"
+      [activityToEdit]="activityToEdit()"
+      (onCloseDialog)="closeEditDialog()"
+      (onSubmitForm)="editActivityFromSchedule($event)"
+    ></edit-activity-dialog>
+    }
+
+    <delete-activity-dialog
+      [isDialogVisible]="isDeleteActivityDialogOpen()"
+      [activitityForDeletion]="activitySelectedForDelete()"
+      (onCancelDeletion)="cancelDeteteActivity()"
+      (onSubmitDeletion)="deleteActivityFromSchedule()"
+    ></delete-activity-dialog>
+  </div>
+</div>

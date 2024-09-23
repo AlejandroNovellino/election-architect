@@ -1,0 +1,39 @@
+<p-dialog
+  header="Confirmar"
+  [modal]="true"
+  [style]="{ width: '450px' }"
+  [visible]="isDialogVisible()"
+  [closable]="false"
+>
+  <div class="flex align-items-center justify-content-center">
+    <i class="pi pi-info-circle mr-3" style="font-size: 2rem"></i>
+    <span
+      >Guardar este draft no implica que el mismo iniciará al momento. El evento
+      se encontrará disponible para ser iniciado antes de la fecha de inicio.
+    </span>
+  </div>
+  <div class="flex justify-content-start align-items-center mt-5 ml-6">
+    <div class="field-checkbox">
+      <p-checkbox [binary]="true" [(ngModel)]="saveConfig"></p-checkbox>
+      <label for="sf">Guardar la configuración de este draft</label>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      icon="pi pi-times"
+      class="p-button-text"
+      label="Cancelar"
+      (click)="HandleCancel()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      icon="pi pi-check"
+      class="p-button-text"
+      label="Guardar"
+      (click)="HandleSubmit()"
+    ></button>
+  </ng-template>
+</p-dialog>

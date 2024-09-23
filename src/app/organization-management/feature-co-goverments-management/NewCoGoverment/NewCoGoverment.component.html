@@ -1,0 +1,264 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card p-fluid px-6 py-6">
+      <!-- Header elements -->
+      <div
+        class="flex flex-wrap align-items-center justify-content-between gap-3 mb-6"
+      >
+        <h1 class="m-0">Nuevo Co-Gobierno</h1>
+        <div class="flex align-items-center gap-3">
+          <!-- Return button -->
+          <p-button
+            outlined="secondary"
+            severity="secondary"
+            icon="pi pi-angle-left"
+            label="Regresar"
+            (onClick)="goBack()"
+          />
+        </div>
+      </div>
+      <!-- Sub title -->
+      <h3 class="mb-5">Datos del nuevo Co-Gobierno a agregar</h3>
+      <!-- Forms -->
+      <form
+        [formGroup]="newCoGovermentForm"
+        (ngSubmit)="onCreateNewCoGoverment()"
+        autocomplete="off"
+      >
+        <div class="p-formgrid grid">
+          <!-- Row -->
+          <div class="field col-6">
+            <label class="font-semibold">Nombre</label>
+            <input
+              pInputText
+              formControlName="name"
+              id="name"
+              class="flex-auto w-full"
+              autocomplete="off"
+              [ngClass]="ngErrorClass(newCoGovermentForm, 'name')"
+            />
+            <!-- Error message -->
+            @if(newCoGovermentForm.get('name')!.touched &&
+            newCoGovermentForm.get('name')!.invalid){
+            <small class="p-error mt-1">
+              {{ getFieldError(newCoGovermentForm, "name") }}
+            </small>
+            }
+          </div>
+          <div class="field col-6">
+            <label class="font-semibold">Dependencia</label>
+            <p-dropdown
+              formControlName="dependency"
+              [options]="newCoGovermentFacadeService.dependencies()"
+              optionLabel="name"
+              optionValue="name"
+              placeholder="Seleccione un tipo"
+              class="flex-auto"
+              autocomplete="off"
+              styleClass="w-full"
+              [ngClass]="ngErrorClass(newCoGovermentForm, 'dependency')"
+            />
+            <!-- Error message -->
+            @if(newCoGovermentForm.get('dependency')!.touched &&
+            newCoGovermentForm.get('dependency')!.invalid){
+            <small class="p-error mt-1">
+              {{ getFieldError(newCoGovermentForm, "dependency") }}
+            </small>
+            }
+          </div>
+          <!-- Row -->
+          <div class="field col-6">
+            <label class="font-semibold">Tipos Votación</label>
+            <p-dropdown
+              formControlName="votingType"
+              [options]="newCoGovermentFacadeService.coGovermentVotingTypes()"
+              optionLabel="name"
+              optionValue="name"
+              placeholder="Seleccione un tipo"
+              class="flex-auto"
+              autocomplete="off"
+              styleClass="w-full"
+              [ngClass]="ngErrorClass(newCoGovermentForm, 'votingType')"
+            />
+            <!-- Error message -->
+            @if(newCoGovermentForm.get('votingType')!.touched &&
+            newCoGovermentForm.get('votingType')!.invalid){
+            <small class="p-error mt-1">
+              {{ getFieldError(newCoGovermentForm, "votingType") }}
+            </small>
+            }
+          </div>
+          <div class="field col-6">
+            <label class="font-semibold">Tipos de Co-Gobierno</label>
+            <p-dropdown
+              formControlName="coGovermentType"
+              [options]="newCoGovermentFacadeService.coGovermentTypes()"
+              optionLabel="name"
+              optionValue="name"
+              placeholder="Seleccione un tipo"
+              class="flex-auto"
+              autocomplete="off"
+              styleClass="w-full"
+              [ngClass]="ngErrorClass(newCoGovermentForm, 'coGovermentType')"
+            />
+            <!-- Error message -->
+            @if(newCoGovermentForm.get('coGovermentType')!.touched &&
+            newCoGovermentForm.get('coGovermentType')!.invalid){
+            <small class="p-error mt-1">
+              {{ getFieldError(newCoGovermentForm, "coGovermentType") }}
+            </small>
+            }
+          </div>
+          <!-- Row -->
+          <div class="field col-12">
+            <label class="font-semibold">Descripción</label>
+            <textarea
+              pInputText
+              formControlName="description"
+              rows="3"
+              id="description"
+              class="flex-auto"
+              autocomplete="off"
+              [ngClass]="ngErrorClass(newCoGovermentForm, 'description')"
+            ></textarea>
+          </div>
+          <!-- Row -->
+          <div class="field col-12">
+            <div
+              class="flex flex-wrap align-items-center justify-content-between"
+            >
+              <h3 class="m-auto mx-0">Cargos para este Co-Gobierno</h3>
+              <div class="flex align-items-center gap-3">
+                <!-- Button -->
+                <p-button
+                  outlined="success"
+                  severity="success"
+                  icon="pi pi-plus"
+                  label="Nuevo cargo"
+                  (onClick)="newForm()"
+                />
+                <!-- Button -->
+                <p-button
+                  outlined="danger"
+                  severity="danger"
+                  icon="pi pi-trash"
+                  label="Borrar cargo"
+                  (onClick)="deleteForm()"
+                />
+              </div>
+            </div>
+          </div>
+          <!--  -->
+          <!-- Forms -->
+          @for (formControl of getControlAsFormGroup(); track $index) {
+          <div class="field col-12 fadein animation-duration-300 mb-0">
+            <form [formGroup]="formControl" autocomplete="off">
+              <div class="p-formgrid grid">
+                <!-- Col cargo -->
+                <div class="field md:col-3 sm:col-6 col-6">
+                  <label class="font-semibold">Cargo</label>
+                  <p-dropdown
+                    formControlName="office"
+                    [options]="newCoGovermentFacadeService.offices()"
+                    optionLabel="name"
+                    optionValue="name"
+                    placeholder="Seleccione un tipo"
+                    class="flex-auto"
+                    autocomplete="off"
+                    styleClass="w-full"
+                    [ngClass]="ngErrorClass(formControl, 'office')"
+                  />
+                  <!-- Error message -->
+                  @if(formControl.get('office')!.touched &&
+                  formControl.get('office')!.invalid){
+                  <small class="p-error mt-1">
+                    {{ getFieldError(formControl, "office") }}
+                  </small>
+                  }
+                </div>
+                <!-- Col cantidad -->
+                <div class="field md:col-3 sm:col-6 col-6">
+                  <label class="font-semibold">Cantidad</label>
+                  <input
+                    pInputText
+                    formControlName="amount"
+                    id="amount"
+                    class="flex-auto w-full"
+                    autocomplete="off"
+                    type="number"
+                    [ngClass]="ngErrorClass(formControl, 'amount')"
+                  />
+                  <!-- Error message -->
+                  @if(formControl.get('amount')!.touched &&
+                  formControl.get('amount')!.invalid){
+                  <small class="p-error mt-1">
+                    {{ getFieldError(formControl, "amount") }}
+                  </small>
+                  }
+                </div>
+                <!-- Col electores -->
+                <div class="field md:col-3 sm:col-6 col-6">
+                  <label class="font-semibold">Electores</label>
+                  <p-multiSelect
+                    formControlName="electors"
+                    [options]="newCoGovermentFacadeService.populations()"
+                    optionLabel="name"
+                    optionValue="name"
+                    placeholder="Seleccione un tipo"
+                    class="flex-auto"
+                    autocomplete="off"
+                    styleClass="w-full"
+                    [ngClass]="ngErrorClass(formControl, 'electors')"
+                  />
+                  <!-- Error message -->
+                  @if(formControl.get('electors')!.touched &&
+                  formControl.get('electors')!.invalid){
+                  <small class="p-error mt-1">
+                    {{ getFieldError(formControl, "electors") }}
+                  </small>
+                  }
+                </div>
+                <!-- Col votantes -->
+                <div class="field sm:col-6 md:col-3 col-6">
+                  <label class="font-semibold">Candidatos</label>
+                  <p-multiSelect
+                    formControlName="candidates"
+                    [options]="newCoGovermentFacadeService.populations()"
+                    optionLabel="name"
+                    optionValue="name"
+                    placeholder="Seleccione un tipo"
+                    class="flex-auto"
+                    autocomplete="off"
+                    styleClass="w-full"
+                    [ngClass]="ngErrorClass(formControl, 'candidates')"
+                  />
+                  <!-- Error message -->
+                  @if(formControl.get('candidates')!.touched &&
+                  formControl.get('candidates')!.invalid){
+                  <small class="p-error mt-1">
+                    {{ getFieldError(formControl, "candidates") }}
+                  </small>
+                  }
+                </div>
+                <!-- Divider -->
+                @if (!$last) {
+                <div class="field col-12 m-0 py-0">
+                  <p-divider />
+                </div>
+                }
+              </div>
+            </form>
+          </div>
+          }
+          <!-- Buttons -->
+          <div class="field col-6">
+            <p-button label="Cancelar" severity="danger" (onClick)="goBack()" />
+          </div>
+          <div class="field col-6">
+            <p-button label="Crear" type="submit" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

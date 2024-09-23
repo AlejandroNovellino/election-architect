@@ -1,0 +1,25 @@
+<h5 class="mt-5 text-3xl text-900">Cargos Seleccionados</h5>
+<hr />
+<div
+  *ngFor="let item of currentSelection(); let entity_index = index"
+  class="flex flex-column"
+>
+  <h5 class="my-3 text-900 font-bold flex">{{ item.coGoverment.name }}</h5>
+  <div
+    *ngFor="let charge of item.electiveOffices; let last = last"
+    class="flex justify-content-between"
+  >
+    <p class="text-600 text-sm mb-3 ml-3">{{ charge.name }}</p>
+    <div *ngIf="last" class="flex justify-content-end">
+      <button
+        pButton
+        pRipple
+        icon="pi pi-trash"
+        class="p-button-text p-button-rounded"
+        type="button"
+        (click)="removeCharges(item)"
+      ></button>
+    </div>
+  </div>
+  <hr />
+</div>

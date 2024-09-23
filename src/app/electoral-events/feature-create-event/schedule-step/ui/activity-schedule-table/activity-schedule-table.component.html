@@ -1,0 +1,106 @@
+<p-table
+  #dt
+  [value]="currentActivities()"
+  responsiveLayout="scroll"
+  [rows]="10"
+  [globalFilterFields]="[
+    'activity.name',
+    'responsible.name',
+    'startingDate',
+    'endingDate',
+    'duration'
+  ]"
+  selectionMode="multiple"
+  [rowHover]="true"
+  dataKey="id"
+>
+  <ng-template pTemplate="caption">
+    <div
+      class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+    >
+      <h5 class="m-0">Cronograma de Actividades</h5>
+      <span class="block mt-2 md:mt-0 p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          placeholder="Buscar..."
+          class="w-full sm:w-auto"
+          (input)="onGlobalFilter(dt, $event)"
+        />
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem"></th>
+      <th pSortableColumn="id">
+        Actividad <p-sortIcon field="id"></p-sortIcon>
+      </th>
+      <th pSortableColumn="name">
+        Responsable <p-sortIcon field="name"></p-sortIcon>
+      </th>
+      <th pSortableColumn="startingDate">
+        Duración <p-sortIcon field="startingDate"></p-sortIcon>
+      </th>
+      <th pSortableColumn="status">
+        Fecha Inicio <p-sortIcon field="status"></p-sortIcon>
+      </th>
+      <th pSortableColumn="status">
+        Fecha Fin <p-sortIcon field="status"></p-sortIcon>
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-currentActivity>
+    <tr>
+      <td></td>
+      <td style="width: 16.67%; min-width: 10rem">
+        <span class="p-column-title">Actividad</span>
+        {{ currentActivity.activity.name }}
+      </td>
+      <td style="width: 16.67%; min-width: 10rem">
+        <span class="p-column-title">Responsables</span>
+        @for (responsible of currentActivity.responsibles; track $index; let
+        last = $last) {
+        <span>{{ responsible.name }}</span>
+        @if (!last) {
+        <span>, </span>
+        } }
+      </td>
+      <td style="width: 16.67%; min-width: 10rem">
+        <span class="p-column-title">Duración</span>
+        {{
+          currentActivity.duration
+            | i18nPlural : { "=0": "0 días", "=1": "1 día", other: "# días" }
+        }}
+      </td>
+      <td style="width: 16.67%; min-width: 10rem">
+        <span class="p-column-title">Fecha Inicio</span>
+        {{ currentActivity.startingDate | date : "mediumDate" }}
+      </td>
+      <td style="width: 16.67%; min-width: 10rem">
+        <span class="p-column-title">Fecha Fin</span>
+        {{ currentActivity.endingDate | date : "mediumDate" }}
+      </td>
+      <td>
+        <div class="flex">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-success mr-2"
+            (click)="onHandleEditActivity(currentActivity)"
+          ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger"
+            (click)="onHandleDeleteActivity(currentActivity)"
+          ></button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

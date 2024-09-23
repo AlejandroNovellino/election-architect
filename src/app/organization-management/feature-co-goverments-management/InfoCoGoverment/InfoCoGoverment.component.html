@@ -1,0 +1,150 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card p-fluid px-6 py-6">
+      <!-- Header elements -->
+      <div
+        class="flex flex-wrap align-items-center justify-content-between gap-3 mb-6"
+      >
+        <h1 class="m-0">Información del Co-Gobierno</h1>
+        <div class="flex align-items-center gap-3">
+          <!-- Return button -->
+          <p-button
+            outlined="secondary"
+            severity="secondary"
+            icon="pi pi-angle-left"
+            label="Regresar"
+            (onClick)="goBack()"
+          />
+        </div>
+      </div>
+      <!-- Sub title -->
+      <h3 class="mb-5">Datos del Co-Gobierno</h3>
+      <!-- Forms -->
+      <div class="p-formgrid grid">
+        <!-- Row -->
+        <div class="field col-6">
+          <label class="font-semibold">Nombre</label>
+          <input
+            pInputText
+            id="name"
+            class="flex-auto w-full"
+            autocomplete="off"
+            [value]="coGoverment().name"
+            [disabled]="true"
+          />
+        </div>
+        <div class="field col-6">
+          <label class="font-semibold">Dependencia</label>
+          <input
+            pInputText
+            id="name"
+            class="flex-auto w-full"
+            autocomplete="off"
+            [value]="coGoverment().dependency"
+            [disabled]="true"
+          />
+        </div>
+        <!-- Row -->
+        <div class="field col-6">
+          <label class="font-semibold">Tipos Votación</label>
+          <input
+            pInputText
+            id="name"
+            class="flex-auto w-full"
+            autocomplete="off"
+            [value]="coGoverment().votingType"
+            [disabled]="true"
+          />
+        </div>
+        <div class="field col-6">
+          <label class="font-semibold">Tipos de Co-Gobierno</label>
+          <input
+            pInputText
+            id="name"
+            class="flex-auto w-full"
+            autocomplete="off"
+            [value]="coGoverment().coGovermentType"
+            [disabled]="true"
+          />
+        </div>
+        <!-- Row -->
+        <div class="field col-12">
+          <label class="font-semibold">Descripción</label>
+          <textarea
+            pInputText
+            [value]="coGoverment().description"
+            rows="3"
+            class="flex-auto"
+            [disabled]="true"
+          ></textarea>
+        </div>
+        <!-- Row -->
+        <div class="field col-12">
+          <h3 class="m-auto mx-0">Cargos para este Co-Gobierno</h3>
+        </div>
+        <!--  -->
+        <!-- Forms -->
+        @for (electiveOffice of coGoverment().electiveOffices; track $index) {
+        <div class="field col-12 fadein animation-duration-300 mb-0">
+          <div class="p-formgrid grid">
+            <!-- Col cargo -->
+            <div class="field md:col-3 sm:col-6 col-6">
+              <label class="font-semibold">Cargo</label>
+              <input
+                pInputText
+                id="name"
+                class="flex-auto w-full"
+                autocomplete="off"
+                [value]="electiveOffice.office"
+                [disabled]="true"
+              />
+            </div>
+            <!-- Col cantidad -->
+            <div class="field md:col-3 sm:col-6 col-6">
+              <label class="font-semibold">Cantidad</label>
+              <input
+                pInputText
+                id="name"
+                class="flex-auto w-full"
+                autocomplete="off"
+                [value]="electiveOffice.amount"
+                [disabled]="true"
+              />
+            </div>
+            <!-- Col electores -->
+            <div class="field md:col-3 sm:col-6 col-6">
+              <label class="font-semibold">Electores</label>
+              <input
+                pInputText
+                id="name"
+                class="flex-auto w-full"
+                autocomplete="off"
+                [value]="electiveOffice.electors"
+                [disabled]="true"
+              />
+            </div>
+            <!-- Col votantes -->
+            <div class="field sm:col-6 md:col-3 col-6">
+              <label class="font-semibold">Candidatos</label>
+              <input
+                pInputText
+                id="name"
+                class="flex-auto w-full"
+                autocomplete="off"
+                [value]="electiveOffice.candidates"
+                [disabled]="true"
+              />
+            </div>
+            <!-- Divider -->
+            @if (!$last) {
+            <div class="field col-12 m-0 py-0">
+              <p-divider />
+            </div>
+            }
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

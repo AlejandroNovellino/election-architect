@@ -1,0 +1,10 @@
+<div class="card mt-5">
+  <full-calendar [options]="calendarOptions"></full-calendar>
+  @if (acitivityToShow()) {
+  <activity-info-dialog
+    [showDialog]="showInfoDialog()"
+    [scheduleActivity]="acitivityToShow()"
+    (onCloseDialog)="closeInfoDialog()"
+  ></activity-info-dialog>
+  }
+</div>

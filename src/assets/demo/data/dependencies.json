@@ -1,0 +1,44 @@
+[
+  {
+    "id": 0,
+    "name": "Consejo Universitario",
+    "type": "Universitaria",
+    "fatherDependency": null,
+    "description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+  {
+    "id": 1,
+    "name": "Facultad de Ingeniería",
+    "type": "Académica",
+    "fatherDependency": "Consejo Universitario",
+    "description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+  {
+    "id": 2,
+    "name": "Facultad de Derecho",
+    "type": "Académica",
+    "fatherDependency": "Consejo Universitario",
+    "description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+  {
+    "id": 3,
+    "name": "Facultad de Humanidades",
+    "type": "Académica",
+    "fatherDependency": "Consejo Universitario",
+    "description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+  {
+    "id": 4,
+    "name": "Escuela de Ingeniería Informática",
+    "type": "Académica",
+    "fatherDependency": "Facultad de Ingeniería",
+    "description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+  {
+    "id": 5,
+    "name": "Escuela de Ingeniería Civil",
+    "type": "Académica",
+    "fatherDependency": "Facultad de Ingeniería",
+    "description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  }
+]

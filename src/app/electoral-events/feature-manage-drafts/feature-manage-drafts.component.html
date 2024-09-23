@@ -1,0 +1,26 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <p-toast></p-toast>
+
+      <h1 class="mt-0 mb-6">Eventos Electorales</h1>
+      <drafts-table
+        [draftEvents]="draftEvents()"
+        (onDeleteDraft)="deleteDraft($event)"
+        (onDeleteSelectedDrafts)="deleteSelectedDrafts($event)"
+      ></drafts-table>
+    </div>
+
+    <delete-draft-dialog
+      [isVisible]="deleteDialog"
+      (onConfirmDelete)="confirmDelete()"
+      (onCloseDialog)="closeDialog()"
+    ></delete-draft-dialog>
+
+    <delete-drafts-dialog
+      [isVisible]="deleteDraftsDialog"
+      (onConfirmDelete)="confirmDeleteSelected()"
+      (onCloseDialog)="closeDeleteDraftsDialog()"
+    ></delete-drafts-dialog>
+  </div>
+</div>

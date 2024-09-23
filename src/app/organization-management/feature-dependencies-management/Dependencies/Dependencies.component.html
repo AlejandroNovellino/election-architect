@@ -1,0 +1,319 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <p-toast></p-toast>
+      <!-- Header elements -->
+      <div
+        class="flex flex-wrap align-items-center justify-content-between gap-3 mb-6"
+      >
+        <h1 class="m-0">Dependencias</h1>
+        <!-- Two elements to right -->
+        <div class="flex align-items-center gap-3">
+          <!-- Button to create new -->
+          <p-button
+            outlined="true"
+            severity="success"
+            icon="pi pi-plus"
+            label="Nuevo"
+            (onClick)="toggleDialog()"
+          />
+          @if (dependencyFacadeService.dependencies()) {
+          <!-- Search bar -->
+          <div class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              style="width: 100%"
+              pInputText
+              type="text"
+              (input)="onGlobalFilter($event)"
+              placeholder="Filtro"
+            />
+          </div>
+          }
+        </div>
+      </div>
+
+      @if (dependencyFacadeService.loading()) {
+      <p-table
+        [value]="dependencyFacadeService.dependencies()"
+        responsiveLayout="scroll"
+        [rowHover]="true"
+        dataKey="id"
+      >
+        <!-- Header -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-3">Nombre</th>
+            <th class="w-3">Tipo de Dependencia</th>
+            <th class="w-3">Dependencia Padre</th>
+            <th class="w-2"></th>
+          </tr>
+        </ng-template>
+        <!-- Body -->
+        <!-- Loading show skeleton -->
+        <ng-template pTemplate="body">
+          <tr class="cursor-pointer">
+            <!-- Dependency name -->
+            <td style="min-width: 12rem">
+              <p-skeleton />
+            </td>
+            <!-- Dependency type -->
+            <td style="min-width: 12rem">
+              <p-skeleton />
+            </td>
+            <!-- Dependency father -->
+            <td style="min-width: 12rem">
+              <p-skeleton />
+            </td>
+            <!-- Dependency show more button -->
+            <td style="min-width: 12rem">
+              <p-skeleton />
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      } @else if (dependencyFacadeService.dependencies()) {
+      <!-- Loaded so there is data to show -->
+      <p-table
+        #dt
+        [value]="dependencyFacadeService.dependencies()"
+        responsiveLayout="scroll"
+        [globalFilterFields]="['name', 'type', 'fatherDependency']"
+        [rowHover]="true"
+        dataKey="id"
+      >
+        <!-- Header -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-3" pSortableColumn="name">
+              Nombre <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th class="w-3" pSortableColumn="type">
+              Tipo de Dependencia <p-sortIcon field="type"></p-sortIcon>
+            </th>
+            <th class="w-3" pSortableColumn="fatherDependency">
+              Dependencia Padre
+              <p-sortIcon field="fatherDependency"></p-sortIcon>
+            </th>
+            <th class="w-2" style="width: 3rem"></th>
+          </tr>
+        </ng-template>
+        <!-- Body -->
+        <ng-template pTemplate="body" let-dependency>
+          <tr class="cursor-pointer">
+            <!-- Dependency name -->
+            <td class="text-900">
+              {{ dependency.name }}
+            </td>
+            <!-- Dependency type -->
+            <td class="text-900">
+              {{ dependency.type }}
+            </td>
+            <!-- Dependency father -->
+            <td class="text-900">
+              {{ dependency.fatherDependency || "No posee" }}
+            </td>
+            <!-- Dependency show more button -->
+            <td class="text-900">
+              <p-button
+                outlined="true"
+                severity="info"
+                icon="pi pi-plus"
+                label="Mas información"
+                (onClick)="onShowMoreInfo(dependency)"
+              />
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      } @else {
+      <h1>Nothing here</h1>
+      }
+    </div>
+  </div>
+</div>
+
+<!-- Modal to show info -->
+<p-dialog
+  header="Nuevo Tipo de Dependencia"
+  [modal]="true"
+  [(visible)]="moreInfoVisible"
+  styleClass="sm:w-12 lg:w-5"
+>
+  <span class="p-text-secondary block mb-5">
+    Datos de la Dependencia seleccionada
+  </span>
+  <!-- Name input -->
+  <div class="flex align-items-center justify-content-between mb-3">
+    <label class="font-semibold w-6rem">Nombre</label>
+    <!-- Input with error manager -->
+    <div class="flex flex-column w-9">
+      <input
+        pInputText
+        class="flex-auto w-full"
+        [value]="dependencyToShowMoreInfo()?.name"
+        autocomplete="off"
+        [disabled]="true"
+      />
+    </div>
+  </div>
+  <!-- Type input -->
+  <div class="flex align-items-center justify-content-between mb-5">
+    <label class="font-semibold w-6rem">Tipo</label>
+    <!-- Input with error manager -->
+    <div class="flex flex-column w-9">
+      <input
+        pInputText
+        class="flex-auto w-full"
+        [value]="dependencyToShowMoreInfo()?.type"
+        autocomplete="off"
+        [disabled]="true"
+      />
+    </div>
+  </div>
+  <!-- Father input -->
+  <div class="flex align-items-center justify-content-between mb-5">
+    <label class="font-semibold w-6rem">Dependencia padre</label>
+    <!-- Input with error manager -->
+    <div class="flex flex-column w-9">
+      <input
+        pInputText
+        class="flex-auto w-full"
+        [value]="dependencyToShowMoreInfo()?.fatherDependency || 'No posee'"
+        autocomplete="off"
+        [disabled]="true"
+      />
+    </div>
+  </div>
+  <!-- Description input -->
+  <div class="flex align-items-center justify-content-between mb-5">
+    <label for="description" class="font-semibold w-6rem">Descripción</label>
+    <!-- Input with error manager -->
+    <div class="flex flex-column w-9">
+      <textarea
+        pInputText
+        rows="4"
+        class="flex-auto"
+        [value]="dependencyToShowMoreInfo()?.description"
+        [disabled]="true"
+      ></textarea>
+    </div>
+  </div>
+</p-dialog>
+
+<!-- Modal for the new dependency -->
+<p-dialog
+  header="Nueva Dependencia"
+  [modal]="true"
+  [(visible)]="dialogVisible"
+  styleClass="sm:w-12 lg:w-5"
+>
+  <span class="p-text-secondary block mb-5">
+    Datos de la nueva Dependencia a agregar
+  </span>
+  <!-- Form fot the data -->
+  <form
+    [formGroup]="newDependencyForm"
+    (ngSubmit)="onCreateNewDependency()"
+    autocomplete="off"
+  >
+    <!-- Name input -->
+    <div class="flex align-items-center justify-content-between mb-3">
+      <label for="name" class="font-semibold w-6rem">Nombre</label>
+      <!-- Input with error manager -->
+      <div class="flex flex-column w-9">
+        <input
+          pInputText
+          formControlName="name"
+          id="name"
+          class="flex-auto w-full"
+          autocomplete="off"
+          [ngClass]="ngErrorClass('name')"
+        />
+        @if(newDependencyForm.get('name')!.touched &&
+        newDependencyForm.get('name')!.invalid){
+        <small class="p-error mt-1">
+          {{ getFieldError("name") }}
+        </small>
+        }
+      </div>
+    </div>
+    <!-- Type input -->
+    <div class="flex align-items-center justify-content-between mb-5">
+      <label for="dependency-type" class="font-semibold w-6rem">Tipo</label>
+      <!-- Input with error manager -->
+      <div class="flex flex-column w-9">
+        <p-dropdown
+          formControlName="dependencyType"
+          [options]="dependencyFacadeService.dependencyTypes()"
+          optionLabel="name"
+          optionValue="name"
+          placeholder="Seleccione un tipo"
+          class="flex-auto"
+          autocomplete="off"
+          styleClass="w-full"
+          [ngClass]="ngErrorClass('dependencyType')"
+        />
+        @if(newDependencyForm.get('dependencyType')!.touched &&
+        newDependencyForm.get('dependencyType')!.invalid){
+        <small class="p-error mt-1">
+          {{ getFieldError("dependencyType") }}
+        </small>
+        }
+      </div>
+    </div>
+    <!-- Father input -->
+    <div class="flex align-items-center justify-content-between mb-5">
+      <label for="dependency-type" class="font-semibold w-6rem"
+        >Dependencia padre</label
+      >
+      <!-- Input with error manager -->
+      <div class="flex flex-column w-9">
+        <p-dropdown
+          formControlName="fatherDependency"
+          [options]="dependencyFacadeService.dependencies()"
+          optionLabel="name"
+          optionValue="name"
+          placeholder="Seleccione un tipo"
+          class="flex-auto"
+          autocomplete="off"
+          styleClass="w-full"
+          [ngClass]="ngErrorClass('fatherDependency')"
+        />
+        @if(newDependencyForm.get('fatherDependency')!.touched &&
+        newDependencyForm.get('fatherDependency')!.invalid){
+        <small class="p-error mt-1">
+          {{ getFieldError("fatherDependency") }}
+        </small>
+        }
+      </div>
+    </div>
+    <!-- Description input -->
+    <div class="flex align-items-center justify-content-between mb-5">
+      <label for="description" class="font-semibold w-6rem">Descripción</label>
+      <!-- Input with error manager -->
+      <div class="flex flex-column w-9">
+        <textarea
+          pInputText
+          formControlName="description"
+          rows="4"
+          id="description"
+          class="flex-auto"
+          autocomplete="off"
+          [ngClass]="ngErrorClass('description')"
+        ></textarea>
+        @if(newDependencyForm.get('description')!.touched &&
+        newDependencyForm.get('description')!.invalid){
+        <small class="p-error mt-1">
+          {{ getFieldError("description") }}
+        </small>
+        }
+      </div>
+    </div>
+    <!-- Buttons -->
+    <div class="flex justify-content-end gap-2">
+      <p-button label="Cancelar" severity="danger" (onClick)="toggleDialog()" />
+      <p-button label="Crear" type="submit" />
+    </div>
+  </form>
+</p-dialog>

@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Presidente",
+    "description": "Excepteur sint occaecat cupidatat non proident."
+  },
+  {
+    "id": 2,
+    "name": "Representante Estudiantil",
+    "description": "Excepteur sint occaecat cupidatat non proident."
+  },
+  {
+    "id": 3,
+    "name": "Representante de Profesores",
+    "description": "Excepteur sint occaecat cupidatat non proident."
+  },
+  {
+    "id": 4,
+    "name": "Representante de Egresados",
+    "description": "Excepteur sint occaecat cupidatat non proident."
+  }
+]

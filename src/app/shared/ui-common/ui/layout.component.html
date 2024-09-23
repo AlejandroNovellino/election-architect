@@ -1,0 +1,13 @@
+<div class="layout-container" [ngClass]="containerClass">
+  <app-top-bar></app-top-bar>
+  <app-side-bar></app-side-bar>
+  <div class="layout-content-wrapper">
+    <div class="layout-content">
+      <div class="layout-content-inner">
+        <!-- <app-breadcrumb></app-breadcrumb> -->
+        <router-outlet></router-outlet>
+        <!-- <app-footer></app-footer> -->
+      </div>
+    </div>
+  </div>
+</div>

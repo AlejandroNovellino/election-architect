@@ -1,0 +1,33 @@
+<p-dialog
+  header="Confirmar"
+  [modal]="true"
+  [style]="{ width: '450px' }"
+  [visible]="isDialogVisible()"
+  [closable]="false"
+>
+  <div class="flex align-items-center justify-content-center">
+    <i class="pi pi-info-circle mr-3" style="font-size: 2rem"></i>
+    <span
+      >A partir de este punto se inicializa el draft. Si cancela el draft, no
+      perderá el progreso que lleva hasta el momento
+    </span>
+  </div>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      icon="pi pi-times"
+      class="p-button-text"
+      label="Cancelar"
+      (click)="HandleCancel()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      icon="pi pi-check"
+      class="p-button-text"
+      label="Continuar"
+      (click)="HandleSubmit()"
+    ></button>
+  </ng-template>
+</p-dialog>

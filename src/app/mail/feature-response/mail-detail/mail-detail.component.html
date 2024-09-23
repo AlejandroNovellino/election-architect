@@ -1,0 +1,224 @@
+@if (mail()) {
+<div>
+  <div
+    class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-5 pt-5 md:pt-0 gap-4 md:border-top-none border-top-1 surface-border"
+  >
+    <div class="flex align-items-center md:justify-content-start">
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-chevron-left"
+        class="p-button-text p-button-plain md:mr-3"
+        (click)="goBack()"
+      ></button>
+      @if (mail() && mail().image) {
+      <p-avatar
+        [image]="'assets/demo/images/avatar/' + mail().image"
+        size="large"
+        shape="circle"
+        styleClass="border-2 surface-border"
+      ></p-avatar>
+      }
+
+      <div class="flex flex-column mx-3">
+        <span class="block text-900 font-bold text-lg">{{ mail().from }}</span>
+        <span class="block text-900 font-semibold"
+          >De: {{ mail().email || mail().to }}</span
+        >
+      </div>
+    </div>
+    <div
+      class="grid justify-content-end align-items-center column-gap-3 px-4 md:px-0"
+    >
+      <!-- Cols for the request data -->
+      <div class="flex align-items-center column-gap-3 lg:p-0 md:pr-4 md:pt-4">
+        <!-- Request type -->
+        @if (mail().requestType) {
+        <div
+          class="border-round text-center p-2"
+          [ngClass]="mailService.getRequestTypeColor(mail().requestType)"
+        >
+          {{ mail().requestType }}
+        </div>
+        }
+        <!-- Request status -->
+        @if (mail().requestStatus) {
+        <p-tag
+          [severity]="
+            mailService.getRequestStatusSeverity(mail().requestStatus)
+          "
+          [value]="mail().requestStatus"
+        ></p-tag>
+        }
+      </div>
+
+      <!-- Cols for the other data -->
+      <div class="flex align-items-center column-gap-3">
+        <span class="text-900 font-semibold white-space-nowrap mr-auto">{{
+          mail().date
+        }}</span>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-reply"
+          class="p-button-text p-button-plain flex-shrink-0"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-ellipsis-v"
+          class="p-button-text p-button-plain flex-shrink-0"
+        ></button>
+      </div>
+    </div>
+  </div>
+  <!-- Elements of the message and the reply -->
+  <div class="surface-border border-1 border-round p-4">
+    <!-- Elements of the message -->
+    <div class="text-900 font-semibold text-lg mb-3">{{ mail().title }}</div>
+    <p class="line-height-3 mt-0 mb-3" [innerHTML]="mail().message"></p>
+    <!-- Buttons to respond -->
+    @if (!reply()) {
+    <div class="flex column-gap-3 justify-content-end mt-3">
+      <button
+        pButton
+        pRipple
+        type="button"
+        class="p-button-outlined"
+        icon="pi pi-arrow-left"
+        label="Responder"
+        (click)="setToReply()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        type="button"
+        class="p-button-outlined"
+        icon="pi pi-arrow-right"
+        iconPos="right"
+        label="Reenviar"
+        (click)="setToForward()"
+      ></button>
+    </div>
+    }
+  </div>
+
+  <!-- Elements of the message and the reply -->
+  @if (reply()) {
+  <div
+    class="surface-border border-1 border-round p-4 mt-5 fadein animation-duration-300"
+  >
+    <!-- Header of the respond -->
+    <div
+      class="flex flex-column md:flex-row md:align-items-center md:justify-content-between pt-5 md:pt-0 gap-4 md:border-top-none border-top-1 surface-border md:mb-4"
+    >
+      <div class="flex align-items-center md:justify-content-start">
+        @if (mail() && mail().image) {
+        <p-avatar
+          [image]="'assets/layout/images/avatar.png'"
+          size="large"
+          shape="circle"
+          styleClass="border-2 surface-border"
+        ></p-avatar>
+        }
+
+        <div class="flex flex-column mx-3">
+          <span class="block text-900 font-bold text-lg"
+            >User now in the system</span
+          >
+          <span class="block text-900 font-semibold"
+            >To: {{ mail().email || mail().to }}</span
+          >
+        </div>
+      </div>
+
+      <div
+        class="grid justify-content-end align-items-center column-gap-3 px-4 md:px-0"
+      >
+        <!-- Buttons of options -->
+        <!-- Possible responds -->
+        <div
+          class="grid align-items-center justify-content-between column-gap-3 p-4"
+        >
+          @if (possibleResponsesMenuItems().length) { @for (item of
+          possibleResponsesMenuItems(); track $index) {
+          <button
+            pButton
+            pRipple
+            type="button"
+            [severity]="mailService.getRequestStatusSeverity(item)"
+            [label]="item"
+            class="p-button-text p-button-plain font-bold flex-shrink-0 xs:col-5"
+            (click)="getResponseTemplate(item)"
+          ></button>
+          } }
+          <!-- Clear selected option -->
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Limpiar respuesta"
+            class="p-button-text p-button-plain font-bold flex-shrink-0 xs:col-5"
+            (click)="clearSelectedTemplate()"
+          ></button>
+          <!-- Cancel de message -->
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-trash"
+            class="p-button-text p-button-plain flex-shrink-0 xs:col-5"
+            (click)="cancelMessage()"
+          ></button>
+        </div>
+      </div>
+    </div>
+    <!-- Elements of the reply (input)="onGlobalFilter(dt, $event)" -->
+    <!-- Subject input -->
+    <span class="p-input-icon-left w-full mb-4">
+      <input
+        pInputText
+        type="text"
+        [(ngModel)]="newMail.title"
+        placeholder="Title of the mail"
+        class="w-full"
+      />
+    </span>
+    <!-- Reply input -->
+    <p-editor
+      [style]="{ height: '250px' }"
+      [(ngModel)]="newMail.message"
+    ></p-editor>
+    <!-- Respond buttons -->
+    <div class="flex column-gap-3 justify-content-end mt-3">
+      <button
+        pButton
+        pRipple
+        type="button"
+        class="p-button-outlined"
+        icon="pi pi-image"
+      ></button>
+      <button
+        pButton
+        pRipple
+        type="button"
+        class="p-button-outlined"
+        icon="pi pi-paperclip"
+      ></button>
+      <button
+        pButton
+        pRipple
+        type="button"
+        class="p-button-primary"
+        icon="pi pi-send"
+        label="Send"
+        (click)="sendMail()"
+      ></button>
+    </div>
+  </div>
+  }
+</div>
+}

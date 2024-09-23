@@ -1,0 +1,38 @@
+<p-dialog
+  header="Confirmar"
+  [modal]="true"
+  [style]="{ width: '450px' }"
+  [visible]="isDialogVisible()"
+  [closable]="false"
+>
+  <div class="flex align-items-center justify-content-center">
+    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+    @if (activitityForDeletion()) {
+    <span
+      >Está seguro que desea eliminar esta actividad?
+      <b> {{ activitityForDeletion()!.activity.name }}</b
+      >?</span
+    >
+    } @else {
+    <div>No hay actividad seleccionada</div>
+    }
+  </div>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      icon="pi pi-times"
+      class="p-button-text"
+      label="No"
+      (click)="onHandleCancelDeletion()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      icon="pi pi-check"
+      class="p-button-text"
+      label="Sí"
+      (click)="onHandleSubmitDeletion()"
+    ></button>
+  </ng-template>
+</p-dialog>

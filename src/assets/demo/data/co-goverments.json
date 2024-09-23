@@ -1,0 +1,60 @@
+[
+  {
+    "id": 1,
+    "name": "Consejo Universitario",
+    "description": "Excepteur sint occaecat cupidatat non proident.",
+    "votingType": "Plancha",
+    "coGovermentType": "Universitario",
+    "dependency": "Consejo Universitario",
+    "electiveOffices": [
+      {
+        "id": 1,
+        "office": "Presidente",
+        "amount": 2,
+        "electors": ["Estudiantes PR"],
+        "candidates": ["Estudiantes PR"]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Consejo de Facultad de Derecho",
+    "description": "Excepteur sint occaecat cupidatat non proident.",
+    "votingType": "Sujeto",
+    "coGovermentType": "Académico",
+    "dependency": "Facultad de Derecho",
+    "electiveOffices": [
+      {
+        "id": 1,
+        "office": "Representante Estudiantil",
+        "amount": 2,
+        "electors": ["Estudiantes PR"],
+        "candidates": ["Estudiantes PR"]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Consejo de Escuela de Ingeniería Civil",
+    "description": "Excepteur sint occaecat cupidatat non proident.",
+    "votingType": "Sujeto",
+    "coGovermentType": "Académico",
+    "dependency": "Escuela de Ingeniería Civil",
+    "electiveOffices": [
+      {
+        "id": 1,
+        "office": "Representante de Egresados",
+        "amount": 4,
+        "electors": ["Estudiantes PG", "Egresados PG"],
+        "candidates": ["Estudiantes PG", "Egresados PG"]
+      },
+      {
+        "id": 1,
+        "office": "Representante de Profesores",
+        "amount": 3,
+        "electors": ["Profesores PG"],
+        "candidates": ["Profesores PG"]
+      }
+    ]
+  }
+]

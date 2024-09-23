@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "Publicación de registros electorales",
+    "description": "Excepteur sint occaecat cupidatat non proident."
+  },
+  {
+    "id": 2,
+    "name": "Impuganaciones y reclamos sobre el registro electoral",
+    "description": "Excepteur sint occaecat cupidatat non proident."
+  },
+  {
+    "id": 3,
+    "name": "Inscripción de candidatos",
+    "description": "Excepteur sint occaecat cupidatat non proident."
+  }
+]

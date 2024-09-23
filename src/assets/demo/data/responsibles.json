@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Comisión Electoral",
+    "description": "Excepteur sint occaecat cupidatat non proident."
+  },
+  {
+    "id": 2,
+    "name": "Subcomisión Electoral",
+    "description": null
+  },
+  {
+    "id": 3,
+    "name": "Consejos de Facultad",
+    "description": "Excepteur sint occaecat cupidatat non proident."
+  },
+  {
+    "id": 4,
+    "name": "Consejos de Escuela",
+    "description": null
+  }
+]

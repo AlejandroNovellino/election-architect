@@ -1,0 +1,123 @@
+<div class="card py-8 px-6 md:px-8 overflow-auto mt-5">
+  <p-toast key="saveDraft"></p-toast>
+  <div
+    class="flex flex-column align-items-start md:flex-row md:align-items-center md:justify-content-between pb-5 min-w-max"
+  >
+    <div class="flex flex-column">
+      <img src="../../../../../../assets/layout/images/logoUCAB.png" alt="" />
+      <div class="my-3 text-4xl font-bold text-900">Comisión Electoral</div>
+    </div>
+
+    <div class="flex flex-column mt-5 md:mt-0">
+      <div class="flex flex-column">
+        <div class="flex justify-content-between align-items-start">
+          <span class="font-semibold mr-6">FECHA</span>
+          <span>{{ today | date : "mediumDate" }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="border-bottom-1 surface-border flex-column justify-content-center"
+  >
+    <h3 class="flex flex-column text-center">{{ generalInfo().title }}</h3>
+    <p>{{ generalInfo().description }}</p>
+    <p>Tipo de elección: {{ generalInfo().electionType?.name }}</p>
+  </div>
+
+  <h4>Cronograma</h4>
+  <div class="overflow-x-auto">
+    <table class="w-full" style="border-collapse: collapse; table-layout: auto">
+      <thead>
+        <tr>
+          <th
+            class="text-left font-semibold py-3 border-bottom-1 surface-border white-space-nowrap"
+            style="width: 25%"
+          >
+            Actividad
+          </th>
+          <th
+            class="text-left font-semibold py-3 border-bottom-1 surface-border white-space-nowrap"
+            style="width: 25%"
+          >
+            Fecha de Inicio
+          </th>
+          <th
+            class="text-left font-semibold py-3 border-bottom-1 surface-border white-space-nowrap"
+            style="width: 25%"
+          >
+            Fecha Fin
+          </th>
+          <th
+            class="text-left font-semibold py-3 border-bottom-1 surface-border white-space-nowrap"
+            style="width: 25%"
+          >
+            Responsables
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (phase of schedule(); track $index) {
+
+        <tr>
+          <td class="text-left py-3 border-bottom-1 surface-border">
+            {{ phase.activity.name }}
+          </td>
+          <td class="text-left py-3 border-bottom-1 surface-border">
+            {{ phase.startingDate | date : "mediumDate" }}
+          </td>
+          <td class="text-left py-3 border-bottom-1 surface-border">
+            {{ phase.endingDate | date : "mediumDate" }}
+          </td>
+          <td class="text-left py-3 border-bottom-1 surface-border">
+            @for (responsible of phase.responsibles; track $index) {
+            <span>{{ responsible.name }}</span>
+            {{ $last ? "" : ", " }}
+            @if (!$last) {
+            <br />
+            <br />
+            } }
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h4 class="mt-5">Cargos a votar</h4>
+  <hr />
+  @for (item of chargesToVote(); track $index; let entity_index = $index) {
+  <h5 class="my-3 text-900 font-bold flex">{{ item.coGoverment.name }}</h5>
+  @for (charge of item.electiveOffices; track $index; let last = $last) {
+  <div class="flex justify-content-between">
+    <p class="text-600 text-sm mb-3 ml-3">{{ charge.name }}</p>
+  </div>
+  }
+  <hr />
+  }
+  <div class="flex justify-content-end mt-5">
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Atrás"
+      class="p-button-raised p-button-danger"
+      (click)="goBack()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      type="submit"
+      label="Guardar Draft"
+      class="p-button-raised p-button-success ml-2"
+      (click)="openSubmitDialog()"
+    ></button>
+  </div>
+
+  <overview-save-draft-dialog
+    [isDialogVisible]="saveDraftDialog()"
+    (onCancel)="closeSaveDraftDialog()"
+    (onSubmit)="submitDraft($event)"
+  ></overview-save-draft-dialog>
+</div>

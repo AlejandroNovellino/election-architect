@@ -1,0 +1,57 @@
+<form [formGroup]="electiveOfficesForm" (submit)="submitSelectedCharges()">
+  <div>
+    <h5 class="mt-5 text-3xl text-900">Consejos y Entidades</h5>
+    <p-dropdown
+      [options]="coGoverments()"
+      optionLabel="name"
+      placeholder="Seleccione una entidad"
+      formControlName="coGoverment"
+      [showClear]="true"
+      [ngClass]="ngErrorClass('coGoverment')"
+    ></p-dropdown>
+  </div>
+  @if(electiveOfficesForm.get('coGoverment')!.touched &&
+  electiveOfficesForm.get('coGoverment')!.invalid){
+  <small class="p-error">
+    {{ getFieldError("coGoverment") }}
+  </small>
+  }
+  <div class="mt-5">
+    <h5 class="mt-5 text-2xl text-700">Cargos</h5>
+    <p-multiSelect
+      [options]="electiveOffices()"
+      optionLabel="name"
+      placeholder="Seleccione un cargo"
+      emptyMessage="Debe seleccionar una dependencia primero"
+      emptyFilterMessage="No se encontraron cargos"
+      optionLabel="name"
+      formControlName="electiveOffices"
+      class="multiselect-custom"
+      [ngClass]="ngErrorClass('electiveOffices')"
+      display="chip"
+    >
+      <ng-template let-charge pTemplate="charge">
+        <div class="flex align-items-center">
+          <span class="ml-2">{{ charge.name }}</span>
+        </div>
+      </ng-template>
+    </p-multiSelect>
+  </div>
+  @if(electiveOfficesForm.get('electiveOffices')!.touched &&
+  electiveOfficesForm.get('electiveOffices')!.invalid){
+  <small class="p-error">
+    {{ getFieldError("electiveOffices") }}
+  </small>
+  }
+
+  <div class="flex justify-content-end">
+    <button
+      pButton
+      pRipple
+      type="submit"
+      label="Añadir cargos"
+      class="p-button-raised p-button-success mt-5"
+      [disabled]="electiveOfficesForm.invalid"
+    ></button>
+  </div>
+</form>

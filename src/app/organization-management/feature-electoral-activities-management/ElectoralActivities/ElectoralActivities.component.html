@@ -1,0 +1,170 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <p-toast></p-toast>
+      <!-- Header elements -->
+      <div
+        class="flex flex-wrap align-items-center justify-content-between gap-3 mb-6"
+      >
+        <h1 class="m-0">Actividades Electorales</h1>
+        <!-- Two elements to right -->
+        <div class="flex align-items-center gap-3">
+          <!-- Button to create new -->
+          <p-button
+            outlined="true"
+            severity="success"
+            icon="pi pi-plus"
+            label="Nuevo"
+            (onClick)="toggleDialog()"
+          />
+          @if (electoralActivityService.electoralActivities()) {
+          <!-- Search bar -->
+          <div class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              style="width: 100%"
+              pInputText
+              type="text"
+              (input)="onGlobalFilter($event)"
+              placeholder="Filtro"
+            />
+          </div>
+          }
+        </div>
+      </div>
+
+      @if (electoralActivityService.loading()) {
+      <p-table
+        [value]="electoralActivityService.electoralActivities()"
+        responsiveLayout="scroll"
+        [rowHover]="true"
+        dataKey="id"
+      >
+        <!-- Header -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-5">Nombre</th>
+            <th class="w-full">Descripción</th>
+          </tr>
+        </ng-template>
+        <!-- Body -->
+        <!-- Loading show skeleton -->
+        <ng-template pTemplate="body">
+          <tr>
+            <!-- Population name -->
+            <td style="min-width: 12rem" class="text-900">
+              <p-skeleton />
+            </td>
+            <!-- Population description -->
+            <td style="min-width: 12rem" class="text-900">
+              <p-skeleton />
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      } @else if (electoralActivityService.electoralActivities()) {
+      <!-- Loaded ans there is data so show info -->
+      <p-table
+        #dt
+        [value]="electoralActivityService.electoralActivities()"
+        responsiveLayout="scroll"
+        [globalFilterFields]="['name', 'description']"
+        [rowHover]="true"
+        dataKey="id"
+      >
+        <!-- Header -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-5" pSortableColumn="name">
+              Nombre <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th class="w-full">Descripción</th>
+          </tr>
+        </ng-template>
+        <!-- Body -->
+        <ng-template pTemplate="body" let-population>
+          <tr>
+            <!-- Population name -->
+            <td style="min-width: 12rem" class="text-900">
+              {{ population.name }}
+            </td>
+            <!-- Population description -->
+            <td style="min-width: 12rem" class="text-900">
+              {{ population.description }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      } @else {
+      <h1>Nothing here</h1>
+      }
+    </div>
+  </div>
+</div>
+
+<!-- Modal for the new population type info -->
+<p-dialog
+  header="Nueva Actividad Electoral"
+  [modal]="true"
+  [(visible)]="dialogVisible"
+  styleClass="sm:w-12 lg:w-30rem"
+>
+  <span class="p-text-secondary block mb-5">
+    Datos de la nueva Actividad Electoral a agregar
+  </span>
+  <!-- Form fot the data -->
+  <form
+    [formGroup]="newPopulationTypeForm"
+    (ngSubmit)="onCreateNewPopulation()"
+    autocomplete="off"
+  >
+    <!-- Name input -->
+    <div class="flex align-items-center gap-3 mb-3">
+      <label for="name" class="font-semibold w-6rem">Nombre</label>
+      <!-- Input with error manager -->
+      <div class="flex flex-column w-9">
+        <input
+          pInputText
+          formControlName="name"
+          id="name"
+          class="flex-auto w-full"
+          autocomplete="off"
+          [ngClass]="ngErrorClass('name')"
+        />
+        @if(newPopulationTypeForm.get('name')!.touched &&
+        newPopulationTypeForm.get('name')!.invalid){
+        <small class="p-error mt-1">
+          {{ getFieldError("name") }}
+        </small>
+        }
+      </div>
+    </div>
+    <!-- Description input -->
+    <div class="flex align-items-center gap-3 mb-5">
+      <label for="description" class="font-semibold w-6rem">Descripción</label>
+      <!-- Input with error manager -->
+      <div class="flex flex-column w-9">
+        <textarea
+          pInputText
+          formControlName="description"
+          rows="3"
+          id="description"
+          class="flex-auto"
+          autocomplete="off"
+          [ngClass]="ngErrorClass('description')"
+        ></textarea>
+        @if(newPopulationTypeForm.get('description')!.touched &&
+        newPopulationTypeForm.get('description')!.invalid){
+        <small class="p-error mt-1">
+          {{ getFieldError("description") }}
+        </small>
+        }
+      </div>
+    </div>
+    <!-- Buttons -->
+    <div class="flex justify-content-end gap-2">
+      <p-button label="Cancelar" severity="danger" (onClick)="toggleDialog()" />
+      <p-button label="Crear" type="submit" />
+    </div>
+  </form>
+</p-dialog>

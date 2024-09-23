@@ -1,0 +1,103 @@
+<p-dialog
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [style]="{ width: '60vw', height: '57vh' }"
+  [draggable]="false"
+  [visible]="openDialog()!"
+  [closable]="false"
+  header="Añadir nueva actividad"
+  [modal]="true"
+  class="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <form #newActivityForm [formGroup]="activityForm">
+      <div class="field">
+        <label for="status">Seleccione una Actividad</label>
+        <p-dropdown
+          [options]="activities()"
+          optionLabel="name"
+          placeholder="Seleccione una actividad"
+          formControlName="activity"
+          [ngClass]="ngErrorClass('activity')"
+          [showClear]="true"
+        ></p-dropdown>
+        @if(activityForm.get('activity')!.touched &&
+        activityForm.get('activity')!.invalid){
+        <small class="p-error">
+          {{ getFieldError("activity") }}
+        </small>
+        }
+      </div>
+
+      <div class="formgrid grid">
+        <div class="field col">
+          <label for="duration">Duración</label>
+          <p-inputNumber
+            id="duration"
+            suffix=" días"
+            formControlName="duration"
+            [ngClass]="ngErrorClass('duration')"
+          ></p-inputNumber>
+          @if(activityForm.get('duration')!.touched &&
+          activityForm.get('duration')!.invalid){
+          <small class="p-error">
+            {{ getFieldError("duration") }}
+          </small>
+          }
+        </div>
+        <div class="field col">
+          <label for="quantity">Fecha inicio</label>
+          <p-calendar
+            [showIcon]="true"
+            inputId="icon"
+            formControlName="startingDate"
+          ></p-calendar
+          >@if(activityForm.get('startingDate')!.touched &&
+          activityForm.get('startingDate')!.invalid){
+          <small class="p-error">
+            {{ getFieldError("startingDate") }}
+          </small>
+          }
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="status">Seleccione los Responsables</label>
+        <p-multiSelect
+          [options]="responsibles()"
+          optionLabel="name"
+          placeholder="Seleccione una entidad"
+          formControlName="responsibles"
+          [showClear]="true"
+          [ngClass]="ngErrorClass('responsibles')"
+        ></p-multiSelect
+        >@if(activityForm.get('responsibles')!.touched &&
+        activityForm.get('responsibles')!.invalid){
+        <small class="p-error">
+          {{ getFieldError("responsibles") }}
+        </small>
+        }
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancelar"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="onCloseActivityFormDialog()"
+    ></button>
+    <button
+      [disabled]="activityForm.invalid"
+      pButton
+      pRipple
+      type="button"
+      label="Guardar"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="onSumitActivityForm()"
+    ></button>
+  </ng-template>
+</p-dialog>

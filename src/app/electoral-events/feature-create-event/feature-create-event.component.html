@@ -1,0 +1,15 @@
+<div class="col-12">
+  <div class="card card-w-title flex flex-wrap">
+    <div class="col-12 h-full">
+      <h1>Nuevo Evento Electoral</h1>
+      <p-steps
+        [model]="routeItems"
+        styleClass="mt-5"
+        [readonly]="true"
+      ></p-steps>
+    </div>
+    <div class="create-event-display">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

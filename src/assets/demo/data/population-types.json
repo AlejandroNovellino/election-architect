@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Estudiantes PR",
+    "description": "Esta poblacion representa a los estudiantes de pregrado"
+  },
+  {
+    "id": 2,
+    "name": "Profesores PR",
+    "description": "Esta poblacion representa a los profesores de pregrado"
+  },
+  {
+    "id": 3,
+    "name": "Egresados PR",
+    "description": "Esta poblacion representa a los egresados de pregrado"
+  },
+  {
+    "id": 4,
+    "name": "Estudiantes PG",
+    "description": "Esta poblacion representa a los estudiantes de posgrado"
+  },
+  {
+    "id": 5,
+    "name": "Profesores PG",
+    "description": "Esta poblacion representa a los profesores de posgrado"
+  },
+  {
+    "id": 6,
+    "name": "Egresados PG",
+    "description": "Esta poblacion representa a los egresados de posgrado"
+  }
+]

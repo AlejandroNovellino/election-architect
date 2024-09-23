@@ -1,0 +1,376 @@
+@if (mailService.loading()) {
+
+<p-table
+  [value]="mailService.allMails()"
+  responsiveLayout="scroll"
+  [rowHover]="true"
+  dataKey="id"
+>
+  <!-- Header -->
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="w-2"></th>
+      <th class="w-2">Usuario</th>
+      <th class="w-2">Asunto</th>
+      <th class="w-2">Tipo</th>
+      <th class="w-2">Estatus</th>
+      <th class="w-2">Recibido</th>
+    </tr>
+  </ng-template>
+  <!-- Body -->
+  <!-- Loading show skeleton -->
+  <ng-template pTemplate="body">
+    <tr>
+      <td class="w-2">
+        <p-skeleton />
+      </td>
+      <td class="w-2">
+        <p-skeleton />
+      </td>
+      <td class="w-2">
+        <p-skeleton />
+      </td>
+      <td class="w-2">
+        <p-skeleton />
+      </td>
+      <td class="w-2">
+        <p-skeleton />
+      </td>
+      <td class="w-2">
+        <p-skeleton />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+} @else if (mailService.inboxMails().length) {
+
+<p-table
+  #dt
+  [value]="mails"
+  responsiveLayout="scroll"
+  [rows]="20"
+  [globalFilterFields]="[
+    'from',
+    'title',
+    'message',
+    'requestType',
+    'requestStatus'
+  ]"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [(selection)]="selectedMails"
+  selectionMode="multiple"
+  [rowHover]="true"
+  dataKey="id"
+>
+  <!-- Caption -->
+  <ng-template pTemplate="caption">
+    <div
+      class="flex flex-wrap align-items-center justify-content-between gap-3"
+    >
+      <!-- Three buttons -->
+      <div class="flex gap-2 align-items-center">
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-refresh"
+          class="p-button-rounded p-button-text p-button-plain ml-4"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-ellipsis-v"
+          class="p-button-rounded p-button-text p-button-plain ml-3"
+          (click)="menu.toggle($event)"
+        ></button>
+        <p-menu
+          #menu
+          [model]="menuItems()"
+          [appendTo]="dt"
+          [popup]="true"
+        ></p-menu>
+      </div>
+      <!-- Search bar -->
+      <span class="flex gap-2 align-items-center lg:w-6 sm:w-12">
+        <p-button
+          class="w-5"
+          [outlined]="true"
+          severity="secondary"
+          icon="pi pi-filter-slash"
+          label="Limpiar filtros"
+          (onClick)="clearFilters()" />
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="onGlobalFilter($event)"
+            placeholder="Buscar"
+            class="w-full"
+          /> </span
+      ></span>
+    </div>
+  </ng-template>
+  <!-- Header -->
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem"></th>
+      <th style="width: 3rem"></th>
+      <th style="width: 3rem"></th>
+      <th style="width: 3rem"></th>
+      <!-- Usuario -->
+      <th>
+        <div class="flex align-items-center">
+          Usuario
+          <p-columnFilter
+            type="text"
+            field="from"
+            display="menu"
+            matchMode="contains"
+            [showMatchModes]="false"
+            [showAddButton]="false"
+            [showOperator]="false"
+          />
+        </div>
+      </th>
+      <th style="width: 3rem">Asunto</th>
+      <th>
+        <div class="flex align-items-center">
+          Tipo
+          <p-columnFilter
+            field="status"
+            matchMode="equals"
+            [showMatchModes]="false"
+            [showAddButton]="false"
+            [showOperator]="false"
+            [showClearButton]="false"
+            display="menu"
+          >
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-dropdown
+                [(ngModel)]="requestTypeFilter"
+                [options]="requestTypes()"
+                (onChange)="onRequestTypeFilter($event.value)"
+                placeholder="Any"
+              >
+                <ng-template let-option pTemplate="item">
+                  <p-tag
+                    [value]="option.value"
+                    [severity]="
+                      mailService.getRequestTypeSeverity(option.value)
+                    "
+                  />
+                </ng-template>
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+        </div>
+      </th>
+      <th>
+        <div class="flex align-items-center">
+          Estatus
+          <p-columnFilter
+            field="status"
+            matchMode="equals"
+            [showMatchModes]="false"
+            [showAddButton]="false"
+            [showOperator]="false"
+            [showClearButton]="false"
+            display="menu"
+          >
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-dropdown
+                [(ngModel)]="requestStatusFilter"
+                [options]="statusTypes()"
+                (onChange)="onRequestStatusFilter($event.value)"
+                placeholder="Any"
+              >
+                <ng-template let-option pTemplate="item">
+                  <p-tag
+                    [value]="option.value"
+                    [severity]="
+                      mailService.getRequestStatusSeverity(option.value)
+                    "
+                  />
+                </ng-template>
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+        </div>
+      </th>
+      <th>Recibido</th>
+    </tr>
+  </ng-template>
+  <!-- Body -->
+  <ng-template pTemplate="body" let-mail>
+    <tr
+      (mouseenter)="toggleOptions($event, options, date)"
+      (mouseleave)="toggleOptions($event, options, date)"
+      (click)="onRowSelect(mail.id)"
+      class="cursor-pointer"
+      [ngClass]="{
+        'bg-gray-200 hover:surface-hover': !mail.read,
+      }"
+    >
+      <!-- Checkbox -->
+      <td style="width: 4rem" class="pl-3">
+        <p-tableCheckbox
+          [value]="mail"
+          (click)="$event.stopPropagation()"
+          (touchend)="$event.stopPropagation()"
+        ></p-tableCheckbox>
+      </td>
+      <!-- Star -->
+      @if (!mail.trash && !mail.spam) {
+      <td style="width: 4rem">
+        <span
+          (click)="onStar($event, mail.id)"
+          (touchend)="onStar($event, mail.id)"
+          class="cursor-pointer"
+        >
+          <i
+            class="pi pi-fw text-xl"
+            [ngClass]="{
+              'pi-star-fill': mail.starred,
+              'pi-star': !mail.starred
+            }"
+          ></i>
+        </span>
+      </td>
+      }
+      <!-- Bookmark -->
+      @if (!mail.trash && !mail.spam) {
+      <td style="width: 4rem">
+        <span
+          (click)="onBookmark($event, mail.id)"
+          (touchend)="onBookmark($event, mail.id)"
+          class="cursor-pointer"
+        >
+          <i
+            class="pi pi-fw text-xl"
+            [ngClass]="{
+              'pi-bookmark-fill': mail.important,
+              'pi-bookmark': !mail.important
+            }"
+          ></i>
+        </span>
+      </td>
+      }
+      <!-- Avatar -->
+      <td style="min-width: 4rem">
+        <p-avatar
+          [image]="
+            mail.image
+              ? 'assets/demo/images/avatar/' + mail.image
+              : 'assets/layout/images/avatar.png'
+          "
+        ></p-avatar>
+      </td>
+      <!-- User -->
+      <td style="min-width: 12rem" class="text-900 font-semibold">
+        {{ mail.from }}
+      </td>
+      <!-- Subject -->
+      <td style="min-width: 12rem">
+        <span
+          class="font-medium white-space-nowrap overflow-hidden text-overflow-ellipsis block"
+          style="max-width: 30rem"
+        >
+          {{ mail.title }}
+        </span>
+      </td>
+      <!-- Type of request -->
+      @if (mail.requestType) {
+      <td style="min-width: 12rem" class="font-bold">
+        <div
+          class="border-round text-center p-2"
+          [ngClass]="mailService.getRequestTypeColor(mail.requestType)"
+        >
+          {{ mail.requestType }}
+        </div>
+      </td>
+      }
+      <!-- Status of request -->
+      @if (mail.requestStatus) {
+      <td style="min-width: 12rem">
+        <p-tag
+          [severity]="mailService.getRequestStatusSeverity(mail.requestStatus)"
+          [value]="mail.requestStatus"
+        ></p-tag>
+      </td>
+      }
+      <!-- Date -->
+      <td style="min-width: 10rem">
+        <div class="flex justify-content-end w-full px-0">
+          <span #date class="text-700 font-semibold white-space-nowrap">
+            {{ mail.date }}
+          </span>
+          <!-- Buttons when hover -->
+          <div style="display: none" #options>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-inbox"
+              class="h-2rem w-2rem mr-2"
+              (click)="onArchive($event, mail.id)"
+              pTooltip="Archivar"
+              tooltipPosition="top"
+              type="button"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-reply"
+              class="p-button-secondary h-2rem w-2rem mr-2"
+              (click)="onReply($event, mail)"
+              pTooltip="Responder"
+              tooltipPosition="top"
+              type="button"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-danger h-2rem w-2rem"
+              (click)="onTrash($event, mail.id)"
+              pTooltip="Eliminar"
+              tooltipPosition="top"
+              type="button"
+            ></button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  [(visible)]="dialogVisible"
+  (onHide)="dialogVisible = false"
+  [closable]="true"
+  header="New Message"
+  [modal]="true"
+  styleClass="mx-3 sm:mx-0 sm:w-full md:w-8 lg:w-6"
+  contentStyleClass="border-round-bottom border-top-1 surface-border p-0"
+>
+  <app-mail-reply
+    [content]="mail"
+    (hide)="dialogVisible = false"
+  ></app-mail-reply>
+</p-dialog>
+
+} @else {
+<h1>No hay mensajes por ahora</h1>
+}
