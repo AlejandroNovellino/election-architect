@@ -1,19 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import {
-  LayoutService,
-  TabCloseEvent,
-} from '@shared/ui-common/data/services/layout.service';
+import { LayoutService } from '@shared/ui-common/data/services/layout.service';
 import { MenuService } from '@shared/ui-common/data/services/menu.service';
 import { SideBarComponent } from '@shared/ui-common/ui/side-bar/side-bar.component';
 import { TopBarComponent } from '@shared/ui-common/ui/top-bar/top-bar.component';
 import { filter, Subscription } from 'rxjs';
+import { LayoutConfigComponent } from '../config/layout-config.component';
+import { TabCloseEvent } from '../data/interfaces';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { FooterComponent } from './footer/footer.component';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, TopBarComponent, SideBarComponent, RouterModule],
+  imports: [
+    CommonModule,
+    TopBarComponent,
+    SideBarComponent,
+    RouterModule,
+    FooterComponent,
+    BreadcrumbComponent,
+    LayoutConfigComponent,
+  ],
   templateUrl: './layout.component.html',
 })
 export class LayoutComponent implements OnDestroy {

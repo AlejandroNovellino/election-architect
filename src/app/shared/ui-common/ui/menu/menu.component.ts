@@ -1,15 +1,6 @@
-import {
-  Component,
-  computed,
-  inject,
-  OnDestroy,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { MailService } from '@mail-app/data/services/mail.service';
-import { MenuItem } from 'primeng/api';
-import { Subscription } from 'rxjs';
-import { AppMenuitemComponent } from '../app-menuitem/app-menuitem.component';
+import { AppMenuitemComponent } from '../menuitem/menuitem.component';
 
 @Component({
   selector: 'app-menu',

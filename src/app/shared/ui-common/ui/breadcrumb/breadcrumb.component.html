@@ -1,0 +1,15 @@
+<nav class="layout-breadcrumb">
+  <ol>
+    <li>
+      <a [routerLink]="['/']">
+        <i class="pi pi-home"></i>
+      </a>
+    </li>
+    <li class="layout-breadcrumb-chevron">/</li>
+    @for (item of breadcrumbs(); track $index; let last = $last) {
+    <li>{{ item.label }}</li>
+    @if (!last) {
+    <li class="layout-breadcrumb-chevron">/</li>
+    } }
+  </ol>
+</nav>

@@ -1,34 +1,7 @@
 import { effect, Injectable, signal } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Subject } from 'rxjs';
-
-export interface TabCloseEvent {
-  tab: MenuItem;
-  index: number;
-}
-
-export type MenuMode = 'static' | 'overlay' | 'slim-plus' | 'slim';
-
-export type ColorScheme = 'light' | 'dark';
-
-export interface AppConfig {
-  inputStyle: string;
-  colorScheme: ColorScheme;
-  theme: string;
-  ripple: boolean;
-  menuMode: MenuMode;
-  layoutTheme: string;
-  scale: number;
-}
-
-interface LayoutState {
-  staticMenuDesktopInactive: boolean;
-  overlayMenuActive: boolean;
-  profileSidebarVisible: boolean;
-  configSidebarVisible: boolean;
-  staticMenuMobileActive: boolean;
-  menuHoverActive: boolean;
-}
+import { AppConfig, LayoutState, TabCloseEvent } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -40,8 +13,8 @@ export class LayoutService {
     menuMode: 'slim',
     colorScheme: 'light',
     theme: 'indigo',
-    layoutTheme: 'colorScheme',
-    scale: 14,
+    layoutTheme: 'primaryColor',
+    scale: 15,
   };
 
   config = signal<AppConfig>(this._config);

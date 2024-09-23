@@ -40,7 +40,7 @@ import { SideBarComponent } from '../side-bar/side-bar.component';
     RouterModule,
     BadgeModule,
   ],
-  templateUrl: './app-menuitem.component.html',
+  templateUrl: './menuitem.component.html',
   animations: [
     trigger('children', [
       state(
