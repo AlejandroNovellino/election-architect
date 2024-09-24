@@ -3,7 +3,7 @@ export const environment = {
   auth_issuer: 'https://ucab-g1it55.us1.zitadel.cloud',
   auth_client_id: '286268015425705024',
   auth_redirect_url:
-    'https://election-architect-ifei4djvs-alejandros-projects-309155d3.vercel.app',
+    'https://election-architect-jkgpsbcnq-alejandros-projects-309155d3.vercel.app',
   post_logout_redirect_uri:
-    'hhttps://election-architect-ifei4djvs-alejandros-projects-309155d3.vercel.app',
+    'https://election-architect-jkgpsbcnq-alejandros-projects-309155d3.vercel.app',
 };
