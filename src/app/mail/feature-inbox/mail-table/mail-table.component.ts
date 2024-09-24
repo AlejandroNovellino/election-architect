@@ -10,20 +10,21 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MailReplyComponent } from '@mail-app/feature-response/mail-reply/mail-reply.component';
 import { RequestStatus, RequestType } from '@mail-app/data/enums/mail';
 import { Mail } from '@mail-app/data/interfaces/mail';
 import { MailService } from '@mail-app/data/services/mail.service';
+import { MailReplyComponent } from '@mail-app/feature-response/mail-reply/mail-reply.component';
 import { MenuItem, MessageService } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
+import { ChipModule } from 'primeng/chip';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
+import { SkeletonModule } from 'primeng/skeleton';
 import { Table, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-mail-table',
@@ -40,9 +41,11 @@ import { SkeletonModule } from 'primeng/skeleton';
     TagModule,
     MailReplyComponent,
     DropdownModule,
+    ChipModule,
     SkeletonModule,
   ],
   templateUrl: './mail-table.component.html',
+  styleUrl: './mail-table.component.scss',
 })
 export class MailTableComponent implements OnInit {
   // inputs

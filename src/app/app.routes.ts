@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { LayoutComponent } from '@shared/ui-common/ui/layout.component';
+import { LayoutComponent } from '@shared/ngx-verona/ui/layout.component';
 import { AuthGuard } from './auth/guards/auth.guard';
 
 export const routes: Routes = [
