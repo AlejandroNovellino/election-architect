@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, Renderer2, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { LayoutService } from '@shared/ui-common/data/services/layout.service';
 import { MenuService } from '@shared/ui-common/data/services/menu.service';
@@ -26,6 +32,12 @@ import { FooterComponent } from './footer/footer.component';
   templateUrl: './layout.component.html',
 })
 export class LayoutComponent implements OnDestroy {
+  // services injected
+  private readonly menuService: MenuService = inject(MenuService);
+  public readonly layoutService: LayoutService = inject(LayoutService);
+  public readonly renderer: Renderer2 = inject(Renderer2);
+  public readonly router: Router = inject(Router);
+
   overlayMenuOpenSubscription: Subscription;
 
   tabOpenSubscription: Subscription;
@@ -40,12 +52,7 @@ export class LayoutComponent implements OnDestroy {
 
   @ViewChild(TopBarComponent) appTopbar!: TopBarComponent;
 
-  constructor(
-    private menuService: MenuService,
-    public layoutService: LayoutService,
-    public renderer: Renderer2,
-    public router: Router
-  ) {
+  constructor() {
     this.overlayMenuOpenSubscription =
       this.layoutService.overlayOpen$.subscribe(() => {
         if (!this.menuOutsideClickListener) {
