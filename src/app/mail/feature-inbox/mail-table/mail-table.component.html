@@ -121,7 +121,6 @@
       <th style="width: 3rem"></th>
       <th style="width: 3rem"></th>
       <th style="width: 3rem"></th>
-      <th style="width: 3rem"></th>
       <!-- Usuario -->
       <th>
         <div class="flex align-items-center">
@@ -222,7 +221,7 @@
       class="cursor-pointer"
     >
       <!-- Checkbox -->
-      <td style="width: 4rem" class="pl-3">
+      <td style="width: 3rem" class="pl-3">
         <p-tableCheckbox
           [value]="mail"
           (click)="$event.stopPropagation()"
@@ -231,7 +230,7 @@
       </td>
       <!-- Star -->
       @if (!mail.trash && !mail.spam) {
-      <td style="width: 4rem">
+      <td style="width: 3rem">
         <span
           (click)="onStar($event, mail.id)"
           (touchend)="onStar($event, mail.id)"
@@ -249,7 +248,7 @@
       }
       <!-- Bookmark -->
       @if (!mail.trash && !mail.spam) {
-      <td style="width: 4rem">
+      <td style="width: 3rem">
         <span
           (click)="onBookmark($event, mail.id)"
           (touchend)="onBookmark($event, mail.id)"
@@ -265,8 +264,9 @@
         </span>
       </td>
       }
-      <!-- Avatar -->
-      <td style="min-width: 4rem">
+      <!-- User -->
+      <td style="min-width: 12rem" class="text-900 font-semibold">
+        {{ mail.from }}
         @if (!mail.read) {
         <p-chip
           label="Nuevo"
@@ -274,23 +274,12 @@
           styleClass="m-1"
         ></p-chip>
         }
-        <!-- <p-avatar
-          [image]="
-            mail.image
-              ? 'assets/demo/images/avatar/' + mail.image
-              : 'assets/layout/images/avatar.png'
-          "
-        ></p-avatar> -->
-      </td>
-      <!-- User -->
-      <td style="min-width: 12rem" class="text-900 font-semibold">
-        {{ mail.from }}
       </td>
       <!-- Subject -->
       <td style="min-width: 12rem">
         <span
           class="font-medium white-space-nowrap overflow-hidden text-overflow-ellipsis block"
-          style="max-width: 30rem"
+          style="max-width: 18rem"
         >
           {{ mail.title }}
         </span>

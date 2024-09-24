@@ -1,4 +1,4 @@
-import { RequestStatus, RequestType } from '@mail-app/data/enums/mail';
+import { RequestStatusEnum, RequestTypeEnum } from './../enums';
 
 export interface MailResponse {
   data: Mail[];
@@ -9,17 +9,17 @@ export interface Mail {
   from?: string;
   to?: string;
   email?: string;
-  image?: string;
+  image?: string; // subject image
   date?: string;
   message?: string;
   title?: string;
-  important?: boolean;
-  starred?: boolean;
+  important?: boolean; // bookmark
+  starred?: boolean; // start
   trash?: boolean;
   archived?: boolean;
   spam?: boolean;
   sent?: boolean;
-  requestType?: keyof typeof RequestType;
-  requestStatus?: keyof typeof RequestStatus;
+  requestType?: keyof typeof RequestTypeEnum;
+  requestStatus?: keyof typeof RequestStatusEnum;
   read?: boolean;
 }

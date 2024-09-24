@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { RequestType } from '@mail-app/data/enums/mail';
-import { Mail } from '@mail-app/data/interfaces/mail';
 import { MailService } from '@mail-app/data/services/mail.service';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';

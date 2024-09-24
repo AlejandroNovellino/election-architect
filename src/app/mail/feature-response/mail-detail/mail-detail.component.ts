@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RequestStatus } from '@mail-app/data/enums/mail';
+import { RequestStatusEnum } from './../../data/enums';
 import { Mail } from '@mail-app/data/interfaces/mail';
 import { MailService } from '@mail-app/data/services/mail.service';
 import { ReplyToMessageService } from '@mail-app/data/services/reply-to-message.service';
@@ -57,9 +57,10 @@ export default class MailDetailComponent implements OnInit {
     let id = this.activatedRoute.snapshot.params['id'];
     return this.mailService.getMailById(id);
   });
-  possibleResponsesMenuItems: WritableSignal<(keyof typeof RequestStatus)[]> =
-    signal([]);
-  selectedTypeOfResponse = model<keyof typeof RequestStatus>();
+  possibleResponsesMenuItems: WritableSignal<
+    (keyof typeof RequestStatusEnum)[]
+  > = signal([]);
+  selectedTypeOfResponse = model<keyof typeof RequestStatusEnum>();
   // variables
   newMail: Mail = {
     id: '',
@@ -110,7 +111,7 @@ export default class MailDetailComponent implements OnInit {
     console.log(this.selectedTypeOfResponse());
   }
 
-  getResponseTemplate(selectedResponse: keyof typeof RequestStatus) {
+  getResponseTemplate(selectedResponse: keyof typeof RequestStatusEnum) {
     let selectedTemplate = this.replyToMailService.getResponseTemplate(
       this.mail().requestType,
       selectedResponse,
@@ -147,12 +148,13 @@ export default class MailDetailComponent implements OnInit {
     }
   }
 
-  private getResponseOptions(): (keyof typeof RequestStatus)[] {
+  private getResponseOptions(): (keyof typeof RequestStatusEnum)[] {
     // return the menu items of the possible options
     return this.replyToMailService
       .getPossibleRequestResponses(this.mail().requestStatus)
-      .map((element: keyof typeof RequestStatus) => {
-        return element;
+      .map((element) => {
+        const aux = element as keyof typeof RequestStatusEnum;
+        return aux;
       });
   }
 

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RequestStatus, RequestType } from '@mail-app/data/enums/mail';
+import { RequestStatusEnum, RequestTypeEnum } from './../../data/enums';
 import { Mail } from '@mail-app/data/interfaces/mail';
 import { MailService } from '@mail-app/data/services/mail.service';
 import { MailReplyComponent } from '@mail-app/feature-response/mail-reply/mail-reply.component';
@@ -51,7 +51,9 @@ export class MailTableComponent implements OnInit {
   // inputs
   @Input() mails!: Mail[];
   // injected services
-  mailService: MailService = inject(MailService);
+  public readonly mailService: MailService = inject(MailService);
+  private readonly router: Router = inject(Router);
+  private readonly messageService: MessageService = inject(MessageService);
   // signals
   menuItems: WritableSignal<MenuItem[]> = signal([]);
   requestTypes: WritableSignal<any[]> = signal([]);
@@ -65,8 +67,6 @@ export class MailTableComponent implements OnInit {
   // variables
   mail: Mail = {};
   dialogVisible: boolean = false;
-
-  constructor(private router: Router, private messageService: MessageService) {}
 
   ngOnInit(): void {
     // set the menu items
@@ -89,17 +89,26 @@ export class MailTableComponent implements OnInit {
     ]);
     // set the request types
     this.requestTypes.set([
-      { label: RequestType.Candidature, value: RequestType.Candidature },
-      { label: RequestType.Challenge, value: RequestType.Challenge },
-      { label: RequestType.Complaint, value: RequestType.Complaint },
+      {
+        label: RequestTypeEnum.Candidature,
+        value: RequestTypeEnum.Candidature,
+      },
+      { label: RequestTypeEnum.Challenge, value: RequestTypeEnum.Challenge },
+      { label: RequestTypeEnum.Complaint, value: RequestTypeEnum.Complaint },
     ]);
     // set the status types
     this.statusTypes.set([
-      { label: RequestStatus.Pending, value: RequestStatus.Pending },
-      { label: RequestStatus.Rejected, value: RequestStatus.Rejected },
-      { label: RequestStatus.Disapproved, value: RequestStatus.Disapproved },
-      { label: RequestStatus.Approved, value: RequestStatus.Approved },
-      { label: RequestStatus.Processing, value: RequestStatus.Processing },
+      { label: RequestStatusEnum.Pending, value: RequestStatusEnum.Pending },
+      { label: RequestStatusEnum.Rejected, value: RequestStatusEnum.Rejected },
+      {
+        label: RequestStatusEnum.Disapproved,
+        value: RequestStatusEnum.Disapproved,
+      },
+      { label: RequestStatusEnum.Approved, value: RequestStatusEnum.Approved },
+      {
+        label: RequestStatusEnum.Processing,
+        value: RequestStatusEnum.Processing,
+      },
     ]);
   }
 
@@ -130,12 +139,24 @@ export class MailTableComponent implements OnInit {
   onArchive(event: Event, id: number) {
     event.stopPropagation();
     this.mailService.onArchive(id);
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Archivado',
-      detail: 'Correo archivado',
-      life: 3000,
-    });
+
+    const isMailArchived = this.mailService.getMailById(id).archived;
+
+    const messageBody = isMailArchived
+      ? {
+          severity: 'info',
+          summary: 'Archivado',
+          detail: 'Correo archivado',
+          life: 3000,
+        }
+      : {
+          severity: 'info',
+          summary: 'Desarchivado',
+          detail: 'Correo desarchivado',
+          life: 3000,
+        };
+
+    this.messageService.add(messageBody);
   }
 
   onTrash(event: Event, id: number) {

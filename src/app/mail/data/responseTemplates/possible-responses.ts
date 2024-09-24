@@ -1,14 +1,17 @@
-import { RequestStatus } from '@mail-app/data/enums/mail';
-import { PossibleResponses } from '@mail-app/data/interfaces/mailResponse';
+import { RequestStatusEnum } from './../enums';
+import { PossibleResponses } from './../interfaces';
 
 export const possibleResponses: PossibleResponses = {
-  [RequestStatus.Pending]: [RequestStatus.Processing, RequestStatus.Rejected],
-  [RequestStatus.Processing]: [
-    RequestStatus.Approved,
-    RequestStatus.Disapproved,
+  [RequestStatusEnum.Pending]: [
+    RequestStatusEnum.Processing,
+    RequestStatusEnum.Rejected,
   ],
-  [RequestStatus.Rejected]: [],
-  [RequestStatus.Approved]: [],
-  [RequestStatus.Disapproved]: [],
-  [RequestStatus.Accepted]: [],
+  [RequestStatusEnum.Processing]: [
+    RequestStatusEnum.Approved,
+    RequestStatusEnum.Disapproved,
+  ],
+  [RequestStatusEnum.Rejected]: [],
+  [RequestStatusEnum.Approved]: [],
+  [RequestStatusEnum.Disapproved]: [],
+  [RequestStatusEnum.Accepted]: [],
 };

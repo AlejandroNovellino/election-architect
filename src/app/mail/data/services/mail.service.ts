@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { RequestStatus, RequestType } from '@mail-app/data/enums/mail';
+import { RequestStatusEnum, RequestTypeEnum } from './../enums';
 import { delay } from 'rxjs';
 import { Mail, MailResponse } from '@mail-app/data/interfaces/mail';
 
@@ -44,7 +44,7 @@ export class MailService {
         !mail.spam &&
         !mail.trash &&
         !mail.sent &&
-        mail.requestType === RequestType.Candidature
+        mail.requestType === RequestTypeEnum.Candidature
     )
   );
 
@@ -55,7 +55,7 @@ export class MailService {
         !mail.spam &&
         !mail.trash &&
         !mail.sent &&
-        mail.requestType === RequestType.Challenge
+        mail.requestType === RequestTypeEnum.Challenge
     )
   );
 
@@ -66,7 +66,7 @@ export class MailService {
         !mail.spam &&
         !mail.trash &&
         !mail.sent &&
-        mail.requestType === RequestType.Complaint
+        mail.requestType === RequestTypeEnum.Complaint
     )
   );
 
@@ -156,7 +156,7 @@ export class MailService {
           */
       // count candidatures
       if (
-        mail.requestType === RequestType.Candidature &&
+        mail.requestType === RequestTypeEnum.Candidature &&
         !mail.archived &&
         !mail.trash &&
         !mail.spam
@@ -165,7 +165,7 @@ export class MailService {
       }
       // count challenges
       if (
-        mail.requestType === RequestType.Challenge &&
+        mail.requestType === RequestTypeEnum.Challenge &&
         !mail.archived &&
         !mail.trash &&
         !mail.spam
@@ -174,7 +174,7 @@ export class MailService {
       }
       // count complaints
       if (
-        mail.requestType === RequestType.Complaint &&
+        mail.requestType === RequestTypeEnum.Complaint &&
         !mail.archived &&
         !mail.trash &&
         !mail.spam
@@ -394,11 +394,11 @@ export class MailService {
 
   getRequestTypeColor(requestType: String | undefined) {
     switch (requestType) {
-      case RequestType.Challenge:
+      case RequestTypeEnum.Challenge:
         return 'bg-yellow-100';
-      case RequestType.Candidature:
+      case RequestTypeEnum.Candidature:
         return 'bg-blue-100';
-      case RequestType.Complaint:
+      case RequestTypeEnum.Complaint:
         return 'bg-red-100';
       default:
         return 'bg-grey-100';
@@ -407,13 +407,13 @@ export class MailService {
 
   getRequestTypeSeverity(status: string) {
     switch (status) {
-      case RequestType.Candidature:
+      case RequestTypeEnum.Candidature:
         return 'info';
 
-      case RequestType.Challenge:
+      case RequestTypeEnum.Challenge:
         return 'warning';
 
-      case RequestType.Complaint:
+      case RequestTypeEnum.Complaint:
         return 'danger';
 
       default:
@@ -423,15 +423,15 @@ export class MailService {
 
   getRequestStatusSeverity(requestStatus: String | undefined) {
     switch (requestStatus) {
-      case RequestStatus.Pending:
+      case RequestStatusEnum.Pending:
         return 'secondary';
-      case RequestStatus.Rejected:
+      case RequestStatusEnum.Rejected:
         return 'danger';
-      case RequestStatus.Disapproved:
+      case RequestStatusEnum.Disapproved:
         return 'danger';
-      case RequestStatus.Approved:
+      case RequestStatusEnum.Approved:
         return 'success';
-      case RequestStatus.Processing:
+      case RequestStatusEnum.Processing:
         return 'warning';
       default:
         return 'contrast';

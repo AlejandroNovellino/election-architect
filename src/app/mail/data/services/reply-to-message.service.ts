@@ -1,5 +1,5 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
-import { RequestStatus, RequestType } from '@mail-app/data/enums/mail';
+import { RequestStatusEnum, RequestTypeEnum } from './../enums';
 import { Mail } from '@mail-app/data/interfaces/mail';
 import {
   PossibleResponses,
@@ -49,7 +49,7 @@ export class ReplyToMessageService {
     ${mailToForward.message}
     `;
 
-    // TO DO THIS SHOULD BE THE LOGGED IN USER
+    // TODO THIS SHOULD BE THE LOGGED IN USER
     forwardMail.from = 'User now in system';
     forwardMail.to = mailToForward.from;
     forwardMail.image = 'assets/layout/images/avatar.png';
@@ -68,8 +68,8 @@ export class ReplyToMessageService {
   }
 
   getPossibleRequestResponses(
-    requestStatus: keyof typeof RequestStatus | undefined
-  ): (keyof typeof RequestStatus)[] {
+    requestStatus: keyof typeof RequestStatusEnum | undefined
+  ): (keyof typeof RequestStatusEnum)[] {
     if (requestStatus) {
       // get the request response based on the type of the request and the status
       return possibleResponses[requestStatus];
@@ -79,8 +79,8 @@ export class ReplyToMessageService {
   }
 
   getResponseTemplate(
-    requestType: keyof typeof RequestType | undefined,
-    selectedResponse: keyof typeof RequestStatus | undefined,
+    requestType: keyof typeof RequestTypeEnum | undefined,
+    selectedResponse: keyof typeof RequestStatusEnum | undefined,
     name: string
   ): string {
     if (requestType && selectedResponse) {
