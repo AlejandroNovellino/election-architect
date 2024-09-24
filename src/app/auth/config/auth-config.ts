@@ -5,9 +5,9 @@ export const authConfig: AuthConfig = {
   scope: 'openid profile email offline_access',
   responseType: 'code',
   oidc: true,
-  clientId: '283248590720139266',
+  clientId: environment.auth_client_id,
   issuer: environment.auth_issuer,
-  redirectUri: 'http://localhost:4200',
-  postLogoutRedirectUri: 'http://localhost:4200',
+  redirectUri: environment.auth_redirect_url,
+  postLogoutRedirectUri: environment.post_logout_redirect_uri,
   requireHttps: false, // required for running locally
 };
