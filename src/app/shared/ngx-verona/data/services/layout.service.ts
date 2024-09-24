@@ -14,7 +14,7 @@ export class LayoutService {
     colorScheme: 'dark',
     theme: 'indigo',
     layoutTheme: 'colorScheme',
-    scale: 16,
+    scale: 15,
   };
 
   config = signal<AppConfig>(this._config);
