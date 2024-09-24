@@ -199,9 +199,11 @@
                 <ng-template let-option pTemplate="item">
                   <p-tag
                     [value]="option.value"
-                    [severity]="
-                      mailService.getRequestStatusSeverity(option.value)
-                    "
+                    [style]="{
+                      background: mailService.getRequestStatusBackgroundColor(
+                        option.value
+                      )
+                    }"
                   />
                 </ng-template>
               </p-dropdown>
@@ -291,7 +293,7 @@
           class="border-round text-center p-2"
           [ngClass]="mailService.getRequestTypeColor(mail.requestType)"
         >
-          {{ mail.requestType }}
+          {{ mailService.getRequestTypeValueToDisplay(mail.requestType) }}
         </div>
       </td>
       }
@@ -299,8 +301,14 @@
       @if (mail.requestStatus) {
       <td style="min-width: 12rem">
         <p-tag
-          [severity]="mailService.getRequestStatusSeverity(mail.requestStatus)"
-          [value]="mail.requestStatus"
+          [style]="{
+            background: mailService.getRequestStatusBackgroundColor(
+              mail.requestStatus
+            )
+          }"
+          [value]="
+            mailService.getRequestStatusValueToDisplay(mail.requestStatus)
+          "
         ></p-tag>
       </td>
       }

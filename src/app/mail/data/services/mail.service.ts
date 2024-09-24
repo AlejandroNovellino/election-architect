@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { RequestStatusEnum, RequestTypeEnum } from './../enums';
-import { delay } from 'rxjs';
 import { Mail, MailResponse } from '@mail-app/data/interfaces/mail';
+import { requestStatusMapper, requestTypeMapper } from '@mail-app/util';
+import { delay } from 'rxjs';
+import { RequestStatusEnum, RequestTypeEnum } from './../enums';
 
 interface MailServiceState {
   mails: Mail[] | any[];
@@ -395,14 +396,18 @@ export class MailService {
   getRequestTypeColor(requestType: String | undefined) {
     switch (requestType) {
       case RequestTypeEnum.Challenge:
-        return 'bg-yellow-100';
+        return 'bg-challenge';
       case RequestTypeEnum.Candidature:
-        return 'bg-blue-100';
+        return 'bg-candidature';
       case RequestTypeEnum.Complaint:
-        return 'bg-red-100';
+        return 'bg-complaint';
       default:
-        return 'bg-grey-100';
+        return 'bg-without-type';
     }
+  }
+
+  getRequestTypeValueToDisplay(requestType: string | undefined) {
+    return requestTypeMapper(requestType);
   }
 
   getRequestTypeSeverity(status: string) {
@@ -421,18 +426,22 @@ export class MailService {
     }
   }
 
-  getRequestStatusSeverity(requestStatus: String | undefined) {
+  getRequestStatusValueToDisplay(requestStatus: string | undefined) {
+    return requestStatusMapper(requestStatus);
+  }
+
+  getRequestStatusBackgroundColor(requestStatus: String | undefined) {
     switch (requestStatus) {
       case RequestStatusEnum.Pending:
-        return 'secondary';
+        return 'var(--ucab-carrot-orange)';
       case RequestStatusEnum.Rejected:
-        return 'danger';
+        return 'var(--ucab-thunderbird-red)';
       case RequestStatusEnum.Disapproved:
-        return 'danger';
+        return 'var(--ucab-thunderbird-red)';
       case RequestStatusEnum.Approved:
-        return 'success';
+        return 'var(--ucab-jade-green)';
       case RequestStatusEnum.Processing:
-        return 'warning';
+        return 'var(--ucab-persian-green)';
       default:
         return 'contrast';
     }

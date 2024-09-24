@@ -23,6 +23,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { TagModule } from 'primeng/tag';
+import { AuthenticationService } from '../../../auth/services/authentication.service';
 
 @Component({
   selector: 'app-mail-detail',
@@ -44,9 +45,10 @@ import { TagModule } from 'primeng/tag';
 })
 export default class MailDetailComponent implements OnInit {
   // services injected
-  private activatedRoute = inject(ActivatedRoute);
-  private location = inject(Location);
-  private router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly location = inject(Location);
+  private readonly router = inject(Router);
+  readonly authService = inject(AuthenticationService);
 
   mailService: MailService = inject(MailService);
   replyToMailService: ReplyToMessageService = inject(ReplyToMessageService);
