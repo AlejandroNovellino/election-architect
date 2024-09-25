@@ -42,10 +42,15 @@
         <!-- Header -->
         <ng-template pTemplate="header">
           <tr>
-            <th class="w-3">Nombre</th>
-            <th class="w-2">Tipo de Co-Gobierno</th>
-            <th class="w-2">Tipo votación</th>
-            <th class="w-3">Dependencia</th>
+            <!-- Name -->
+            <th class="w-3" pSortableColumn="name">
+              Nombre<p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <!-- Date created -->
+            <th class="w-3" pSortableColumn="date">
+              Creado<p-sortIcon field="date"></p-sortIcon>
+            </th>
+            <!-- More info button -->
             <th class="w-2"></th>
           </tr>
         </ng-template>
@@ -57,19 +62,11 @@
             <td style="min-width: 12rem">
               <p-skeleton />
             </td>
-            <!-- CoGoverment type -->
+            <!-- Date -->
             <td style="min-width: 12rem">
               <p-skeleton />
             </td>
-            <!-- Voting type father -->
-            <td style="min-width: 12rem">
-              <p-skeleton />
-            </td>
-            <!-- Dependency -->
-            <td style="min-width: 12rem">
-              <p-skeleton />
-            </td>
-            <!-- More info -->
+            <!-- More info button -->
             <td style="min-width: 12rem">
               <p-skeleton />
             </td>
@@ -89,9 +86,15 @@
         <!-- Header -->
         <ng-template pTemplate="header">
           <tr>
+            <!-- Name -->
             <th class="w-3" pSortableColumn="name">
               Nombre<p-sortIcon field="name"></p-sortIcon>
             </th>
+            <!-- Date created -->
+            <th class="w-3" pSortableColumn="date">
+              Creado<p-sortIcon field="date"></p-sortIcon>
+            </th>
+            <!-- More info button -->
             <th class="w-2"></th>
           </tr>
         </ng-template>
@@ -101,6 +104,10 @@
             <!-- Name -->
             <td class="text-900">
               {{ shortInfoBallot.name }}
+            </td>
+            <!-- Date -->
+            <td class="text-900">
+              {{ shortInfoBallot.dateCreated }}
             </td>
             <!-- Button show more button   -->
             <td class="text-900">

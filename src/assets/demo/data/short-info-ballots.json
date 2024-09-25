@@ -1,10 +1,12 @@
 [
   {
     "id": 1,
-    "name": "Tarjetón Elecciones Estudiantes 2023"
+    "name": "Tarjetón Elecciones Estudiantes 2023",
+    "dateCreated": "May 30 2023"
   },
   {
     "id": 2,
-    "name": "Tarjetón Elecciones Estudiantes 2022"
+    "name": "Tarjetón Elecciones Estudiantes 2022",
+    "dateCreated": "May 30 2022"
   }
 ]
