@@ -1,0 +1,123 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <!-- Header elements -->
+      <div
+        class="flex flex-wrap align-items-center justify-content-between gap-3 mb-6"
+      >
+        <h1 class="m-0">Tarjetones Electorales Creados</h1>
+        <!-- Two elements to right -->
+        <div class="flex align-items-center gap-3">
+          <!-- Button to create new -->
+          <p-button
+            outlined="true"
+            severity="success"
+            icon="pi pi-plus"
+            label="Nuevo"
+            (onClick)="navigateToNewBallot()"
+          />
+          @if (ballotService.ballots().length) {
+          <!-- Search bar -->
+          <div class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              style="width: 100%"
+              pInputText
+              type="text"
+              (input)="onGlobalFilter($event)"
+              placeholder="Filtro"
+            />
+          </div>
+          }
+        </div>
+      </div>
+
+      @if (ballotService.loading()) {
+      <p-table
+        [value]="ballotService.ballots()"
+        responsiveLayout="scroll"
+        [rowHover]="true"
+        dataKey="id"
+      >
+        <!-- Header -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-3">Nombre</th>
+            <th class="w-2">Tipo de Co-Gobierno</th>
+            <th class="w-2">Tipo votación</th>
+            <th class="w-3">Dependencia</th>
+            <th class="w-2"></th>
+          </tr>
+        </ng-template>
+        <!-- Body -->
+        <!-- Loading show skeleton -->
+        <ng-template pTemplate="body">
+          <tr class="cursor-pointer">
+            <!-- Name -->
+            <td style="min-width: 12rem">
+              <p-skeleton />
+            </td>
+            <!-- CoGoverment type -->
+            <td style="min-width: 12rem">
+              <p-skeleton />
+            </td>
+            <!-- Voting type father -->
+            <td style="min-width: 12rem">
+              <p-skeleton />
+            </td>
+            <!-- Dependency -->
+            <td style="min-width: 12rem">
+              <p-skeleton />
+            </td>
+            <!-- More info -->
+            <td style="min-width: 12rem">
+              <p-skeleton />
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      } @else if (ballotService.ballots().length) {
+      <!-- Loaded so there is data to show -->
+      <p-table
+        #dt
+        [value]="ballotService.ballots()"
+        responsiveLayout="scroll"
+        [globalFilterFields]="['name']"
+        [rowHover]="true"
+        dataKey="id"
+      >
+        <!-- Header -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-3" pSortableColumn="name">
+              Nombre<p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th class="w-2"></th>
+          </tr>
+        </ng-template>
+        <!-- Body -->
+        <ng-template pTemplate="body" let-shortInfoBallot>
+          <tr class="cursor-pointer">
+            <!-- Name -->
+            <td class="text-900">
+              {{ shortInfoBallot.name }}
+            </td>
+            <!-- Button show more button   -->
+            <td class="text-900">
+              <p-button
+                outlined="true"
+                severity="info"
+                icon="pi pi-plus"
+                label="Mas información"
+                (onClick)="onRowSelect(shortInfoBallot.id)"
+              />
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      } @else {
+      <h1>Nothing here</h1>
+      }
+    </div>
+  </div>
+</div>

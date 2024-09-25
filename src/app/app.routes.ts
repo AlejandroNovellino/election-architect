@@ -221,6 +221,31 @@ export const routes: Routes = [
       },
 
       {
+        path: 'ballot-designer',
+        loadComponent: () =>
+          import(
+            './ballot-designer/feature-ballot-management/featureBallotManagement.component'
+          ),
+        children: [
+          { path: '', redirectTo: 'all', pathMatch: 'full' },
+          {
+            path: 'new',
+            loadComponent: () =>
+              import(
+                './ballot-designer/feature-ballot-management/BallotCreator/BallotCreator.component'
+              ),
+          },
+          {
+            path: 'all',
+            loadComponent: () =>
+              import(
+                './ballot-designer/feature-ballot-management/Ballots/Ballots.component'
+              ),
+          },
+        ],
+      },
+
+      {
         path: 'electoral-activities',
         loadComponent: () =>
           import(

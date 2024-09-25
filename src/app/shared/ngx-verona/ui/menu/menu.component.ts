@@ -51,6 +51,11 @@ export class MenuComponent {
         routerLink: 'activities-responsables',
       },
       {
+        label: 'Tarjetón Electoral',
+        icon: 'pi pi-id-card',
+        routerLink: 'ballot-designer',
+      },
+      {
         label: 'Mensajería',
         icon: 'pi pi-inbox',
         routerLink: '/mail/inbox',
