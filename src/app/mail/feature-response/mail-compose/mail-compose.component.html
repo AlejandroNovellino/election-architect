@@ -9,13 +9,13 @@
     class="p-button-outlined p-button-secondary surface-border text-900 w-3rem h-3rem mr-3"
     (click)="goBack()"
   ></button>
-  <span class="block text-900 font-bold text-xl">Compose Message</span>
+  <span class="block text-900 font-bold text-xl">Nuevo Mensaje</span>
 </div>
 <div
   class="surface-section grid mt-4 grid-nogutter formgrid p-4 gap-3 md:surface-border md:border-1 border-round"
 >
   <div class="col-12 field">
-    <label for="to" class="text-900 font-semibold">To</label>
+    <label for="to" class="text-900 font-semibold">Para</label>
     <span class="p-input-icon-left w-full" style="height: 3.5rem">
       <i class="pi pi-user" style="left: 1.5rem"></i>
       <input
@@ -29,7 +29,7 @@
     </span>
   </div>
   <div class="col-12 field">
-    <label for="Subject" class="text-900 font-semibold">Subject</label>
+    <label for="Subject" class="text-900 font-semibold">Asunto</label>
     <span class="p-input-icon-left w-full" style="height: 3.5rem">
       <i class="pi pi-pencil" style="left: 1.5rem"></i>
       <input
@@ -37,7 +37,7 @@
         type="text"
         pInputText
         [(ngModel)]="newMail.title"
-        placeholder="Subject"
+        placeholder="Asunto"
         class="w-full pl-7 text-900 font-semibold"
         style="height: 3.5rem"
       />
@@ -56,7 +56,7 @@
       type="button"
       class="p-button-primary h-3rem w-full sm:w-auto"
       icon="pi pi-send"
-      label="Send Message"
+      label="Enviar Mensaje"
       (click)="sendMail()"
     ></button>
   </div>
