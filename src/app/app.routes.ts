@@ -261,7 +261,7 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'drafts',
+        redirectTo: 'electoral-events/drafts',
         pathMatch: 'full',
       },
     ],
