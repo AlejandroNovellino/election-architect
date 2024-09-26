@@ -15,7 +15,7 @@ export class GetAllCoGovermentsService {
   async execute(): Promise<CoGoverment[]> {
     try {
       const coGoverments$ = this.http.get<CoGoverment[]>(
-        `${this.baseUrl}/co-goverments`
+        `${this.baseUrl}/co-goverments.json`
       );
 
       const coGoverments = firstValueFrom(coGoverments$);

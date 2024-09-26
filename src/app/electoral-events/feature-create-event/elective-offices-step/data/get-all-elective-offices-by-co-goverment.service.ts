@@ -15,7 +15,7 @@ export class GetAllElectiveOfficesByCoGovermentService {
   async execute(): Promise<ElectiveOfficeByCoGoverment[]> {
     try {
       const electiveOffices$ = this.http.get<ElectiveOfficeByCoGoverment[]>(
-        `${this.baseUrl}/elective-offices`
+        `${this.baseUrl}/offices.json`
       );
 
       const electiveOffices = firstValueFrom(electiveOffices$);

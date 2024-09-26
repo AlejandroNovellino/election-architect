@@ -15,7 +15,7 @@ export class GetAllElectionTypesService {
   async execute(): Promise<ElectionType[]> {
     try {
       const electionTypes$ = this.http.get<ElectionType[]>(
-        `${this.baseUrl}/election-types`
+        `${this.baseUrl}/electoral-events-types.json`
       );
       const electionTypes = await firstValueFrom(electionTypes$);
 

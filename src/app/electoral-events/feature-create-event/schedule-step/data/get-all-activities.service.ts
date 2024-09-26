@@ -13,7 +13,9 @@ export class GetAllActivitiesService {
   constructor(private readonly http: HttpClient) {}
 
   async execute(): Promise<Activity[]> {
-    const activities$ = this.http.get<Activity[]>(`${this.baseUrl}/activities`);
+    const activities$ = this.http.get<Activity[]>(
+      `${this.baseUrl}/electoral-activities.json`
+    );
 
     const activities = await firstValueFrom(activities$);
 

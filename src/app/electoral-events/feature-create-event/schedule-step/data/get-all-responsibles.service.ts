@@ -14,7 +14,7 @@ export class GetAllResponsiblesService {
 
   async execute(): Promise<Responsible[]> {
     const responsibles$ = this.http.get<Responsible[]>(
-      `${this.baseUrl}/responsibles`
+      `${this.baseUrl}/responsibles.json`
     );
 
     const responsibles = await firstValueFrom(responsibles$);

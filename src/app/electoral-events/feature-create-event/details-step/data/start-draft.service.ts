@@ -40,7 +40,7 @@ export class StartDraftService {
     console.log({ requestBody });
 
     const postRequest$ = this.http.post<StartDraftResponse>(
-      `${this.baseUrl}/electoral-events`,
+      `${this.baseUrl}/electoral-events.json`,
       requestBody
     );
 
