@@ -75,6 +75,6 @@ export default class BallotsComponent implements OnInit {
 
   ngOnInit(): void {
     // update the data of the service
-    this.ballotService.getData();
+    //this.ballotService.getData();
   }
 }

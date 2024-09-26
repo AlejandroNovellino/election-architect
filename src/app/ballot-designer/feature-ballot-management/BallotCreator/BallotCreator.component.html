@@ -1,1 +1,200 @@
-<p>BallotCreator works!</p>,
+<div class="grid">
+  <div class="col-12">
+    <div class="card p-fluid px-6 py-6">
+      <!-- Header elements -->
+      <div
+        class="flex flex-wrap align-items-center justify-content-between gap-3 mb-6"
+      >
+        <h1 class="m-0">Nuevo Tarjetón Electoral</h1>
+        <div class="flex align-items-center gap-3">
+          <!-- Return button -->
+          <p-button
+            outlined="secondary"
+            severity="secondary"
+            icon="pi pi-angle-left"
+            label="Regresar"
+            (onClick)="goBack()"
+          />
+        </div>
+      </div>
+      <!-- Sub title -->
+      <!-- <h3 class="mb-5">Datos del nuevo tarjetón a crear</h3> -->
+      <!-- Forms -->
+      <form
+        [formGroup]="newBallotForm"
+        (ngSubmit)="onCreateNewBallot()"
+        autocomplete="off"
+      >
+        <div class="p-formgrid grid">
+          <!-- Row | identifier-->
+          <div class="field col-6">
+            <label class="font-semibold"
+              >Nombre/identificador del tarjetón</label
+            >
+            <input
+              pInputText
+              formControlName="name"
+              id="name"
+              class="flex-auto w-full"
+              autocomplete="off"
+              [ngClass]="ngErrorClass(newBallotForm, 'name')"
+            />
+            <!-- Error message -->
+            @if(newBallotForm.get('name')!.touched &&
+            newBallotForm.get('name')!.invalid){
+            <small class="p-error mt-1">
+              {{ getFieldError(newBallotForm, "name") }}
+            </small>
+            }
+          </div>
+
+          <!-- Row | election -->
+          <div class="field col-6">
+            <label class="font-semibold">Eventos Electorales Disponibles</label>
+            <p-dropdown
+              formControlName="electoralEventAssignedId"
+              [options]="ballotCreatorFacadeService.electoralEvents()"
+              optionLabel="name"
+              optionValue="id"
+              placeholder="Seleccione un tipo"
+              class="flex-auto"
+              autocomplete="off"
+              styleClass="w-full"
+              [ngClass]="
+                ngErrorClass(newBallotForm, 'electoralEventAssignedId')
+              "
+              (onChange)="handleSelectElectoralEvent()"
+            />
+            <!-- Error message -->
+            @if(newBallotForm.get('electoralEventAssignedId')!.touched &&
+            newBallotForm.get('electoralEventAssignedId')!.invalid){
+            <small class="p-error mt-1">
+              {{ getFieldError(newBallotForm, "electoralEventAssignedId") }}
+            </small>
+            }
+          </div>
+
+          <!-- Row | identifier-->
+          <div class="field col-12">
+            <label class="font-semibold">Información e Instrucciones</label>
+            <p-editor
+              formControlName="infoAndInstructions"
+              id="infoAndInstructions"
+              autocomplete="off"
+              class="flex-auto w-full"
+              [style]="{ height: '150px' }"
+              [ngClass]="ngErrorClass(newBallotForm, 'name')"
+            ></p-editor>
+            <!-- Error message -->
+            @if(newBallotForm.get('infoAndInstructions')!.touched &&
+            newBallotForm.get('infoAndInstructions')!.invalid){
+            <small class="p-error mt-1">
+              {{ getFieldError(newBallotForm, "infoAndInstructions") }}
+            </small>
+            }
+          </div>
+
+          <div class="field col-12 mb-0">
+            <h3 class="mb-0">Posiciones y preguntas</h3>
+          </div>
+          <div class="field col-12">
+            <p class="mb-0 text-xl">
+              Añade personalizaciones a cada cargo que formara parte de la
+              elección.
+            </p>
+          </div>
+
+          <!-- For each elective office create the options to customize -->
+          @for (formControl of getControlAsFormGroup(); track $index; let index
+          = $index) {
+          <div
+            class="card p-fluid w-full col-12 mb-5"
+            style="background-color: var(--surface-ground)"
+          >
+            <form [formGroup]="formControl" autocomplete="off">
+              <!-- Title -->
+              <div class="field col-12">
+                <h3 class="mb-0">
+                  {{ electiveOffices()[index].name }}
+                </h3>
+              </div>
+
+              <!-- Settings for the votes -->
+              <div class="field col-12 mb-0">
+                <div class="flex flex-wrap gap-3">
+                  <label class="font-semibold">Orden por: </label>
+                  <!-- Radio buttons -->
+                  <div class="flex align-items-center">
+                    <p-radioButton
+                      [value]="getRadioButtonValue('PorNombre')"
+                      formControlName="sortType"
+                      inputId="orderByName"
+                    />
+                    <label for="orderByName" class="ml-2">Nombre</label>
+                  </div>
+
+                  <div class="flex align-items-center">
+                    <p-radioButton
+                      [value]="getRadioButtonValue('PorApellido')"
+                      formControlName="sortType"
+                      inputId="orderByLastName"
+                    />
+                    <label for="orderByLastName" class="ml-2"> Apellido </label>
+                  </div>
+
+                  <div class="flex align-items-center">
+                    <p-radioButton
+                      [value]="getRadioButtonValue('Aleatorio')"
+                      formControlName="sortType"
+                      inputId="orderRandom"
+                    />
+                    <label for="orderRandom" class="ml-2"> Aleatorio </label>
+                  </div>
+                </div>
+                <!-- Error message -->
+                @if(formControl.get('sortType')!.touched &&
+                formControl.get('sortType')!.invalid){
+                <small class="p-error mt-1">
+                  {{ getFieldError(formControl, "sortType") }}
+                </small>
+                }
+              </div>
+
+              <!-- Row | identifier-->
+              <div class="field col-12">
+                <label class="font-semibold"
+                  >Información e Instrucciones particulares para este cargo
+                  (opcional)</label
+                >
+                <p-editor
+                  formControlName="description"
+                  id="description"
+                  autocomplete="off"
+                  class="flex-auto w-full"
+                  [style]="{ height: '150px' }"
+                  [ngClass]="ngErrorClass(formControl, 'description')"
+                ></p-editor>
+                <!-- Error message -->
+                @if(formControl.get('description')!.touched &&
+                formControl.get('description')!.invalid){
+                <small class="p-error mt-1">
+                  {{ getFieldError(formControl, "description") }}
+                </small>
+                }
+              </div>
+            </form>
+          </div>
+          }
+
+          <!-- Buttons -->
+          <div class="field col-6">
+            <p-button label="Cancelar" severity="danger" (onClick)="goBack()" />
+          </div>
+          <div class="field col-6">
+            <p-button label="Crear" type="submit" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

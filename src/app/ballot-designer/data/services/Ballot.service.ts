@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { delay } from 'rxjs';
-import { BallotShortInfo } from '../interfaces';
+import { Ballot, BallotShortInfo } from '../interfaces';
 
 // state interface
-interface BallotServiceServiceState {
+interface BallotServiceState {
   ballots: BallotShortInfo[] | any[];
   loading: boolean;
 }
@@ -17,7 +17,7 @@ export class BallotService {
   private httpClient = inject(HttpClient);
 
   // state
-  #state = signal<BallotServiceServiceState>({
+  #state = signal<BallotServiceState>({
     ballots: Array.from({ length: 5 }).map((_, i) => ({})),
     loading: true,
   });
@@ -44,8 +44,6 @@ export class BallotService {
       // TODO delete the delay, the delay is for testing
       .pipe(delay(500))
       .subscribe((res) => {
-        console.log(`🚀 ~ BallotService ~ .subscribe ~ res:`, res);
-
         this.#state.set({
           ballots: res,
           loading: false,
@@ -53,12 +51,12 @@ export class BallotService {
       });
   }
 
-  addNewCoGoverment(coGoverment: BallotShortInfo) {
+  createBallot(newBallot: Ballot) {
     // TODO call backend
     //TODO update the state with just the info that short ballot needs
     this.#state.update((lastState) => ({
       ...lastState,
-      coGoverments: [...lastState.ballots, coGoverment],
+      coGoverments: [...lastState.ballots, newBallot],
     }));
   }
 
