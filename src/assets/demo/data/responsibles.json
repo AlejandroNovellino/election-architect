@@ -2,21 +2,41 @@
   {
     "id": 1,
     "name": "Comisión Electoral",
-    "description": "Excepteur sint occaecat cupidatat non proident."
+    "description": null
   },
   {
     "id": 2,
-    "name": "Subcomisión Electoral",
+    "name": "Subcomisiones Electorales",
     "description": null
   },
   {
     "id": 3,
     "name": "Consejos de Facultad",
-    "description": "Excepteur sint occaecat cupidatat non proident."
+    "description": null
   },
   {
     "id": 4,
     "name": "Consejos de Escuela",
+    "description": null
+  },
+  {
+    "id": 5,
+    "name": "DIDES",
+    "description": null
+  },
+  {
+    "id": 6,
+    "name": "Estudiantes",
+    "description": null
+  },
+  {
+    "id": 7,
+    "name": "Seguridad UCAB",
+    "description": null
+  },
+  {
+    "id": 8,
+    "name": "Candidatos estudiantiles y planchas",
     "description": null
   }
 ]

@@ -1,17 +1,17 @@
 [
   {
     "id": 1,
-    "name": "Universitario",
-    "description": "Excepteur sint occaecat cupidatat non proident."
+    "name": "Disciplinario",
+    "description": null
   },
   {
     "id": 2,
     "name": "Académico",
-    "description": "Excepteur sint occaecat cupidatat non proident."
+    "description": null
   },
   {
     "id": 3,
     "name": "Administrativo",
-    "description": "Excepteur sint occaecat cupidatat non proident."
+    "description": null
   }
 ]

@@ -72,7 +72,7 @@
           <label class="font-semibold">Descripción</label>
           <textarea
             pInputText
-            [value]="coGoverment().description"
+            [value]="coGoverment().description || 'No posee'"
             rows="3"
             class="flex-auto"
             [disabled]="true"

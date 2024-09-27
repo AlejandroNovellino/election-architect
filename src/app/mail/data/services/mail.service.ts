@@ -396,13 +396,13 @@ export class MailService {
   getRequestTypeColor(requestType: String | undefined) {
     switch (requestType) {
       case RequestTypeEnum.Challenge:
-        return 'bg-challenge';
+        return 'bg-challenge request-type-font-color';
       case RequestTypeEnum.Candidature:
-        return 'bg-candidature';
+        return 'bg-candidature request-type-font-color';
       case RequestTypeEnum.Complaint:
-        return 'bg-complaint';
+        return 'bg-complaint request-type-font-color';
       default:
-        return 'bg-without-type';
+        return 'bg-without-type request-type-font-color';
     }
   }
 

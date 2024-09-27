@@ -154,7 +154,8 @@
             pRipple
             type="button"
             [style]="{
-              background: mailService.getRequestStatusBackgroundColor(item)
+              background: mailService.getRequestStatusBackgroundColor(item),
+              color: 'white'
             }"
             [label]="mailService.getRequestStatusValueToDisplay(item)"
             class="p-button-text p-button-plain font-bold flex-shrink-0 xs:col-5"
@@ -220,7 +221,7 @@
         type="button"
         class="p-button-primary"
         icon="pi pi-send"
-        label="Send"
+        label="Enviar"
         (click)="sendMail()"
       ></button>
     </div>

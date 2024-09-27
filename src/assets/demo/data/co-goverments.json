@@ -2,8 +2,8 @@
   {
     "id": 1,
     "name": "Consejo Universitario",
-    "description": "Excepteur sint occaecat cupidatat non proident.",
-    "votingType": "Plancha",
+    "description": null,
+    "votingType": "Sujeto",
     "coGovermentType": "Universitario",
     "dependency": "Consejo Universitario",
     "electiveOffices": [
@@ -19,7 +19,7 @@
   {
     "id": 2,
     "name": "Consejo de Facultad de Derecho",
-    "description": "Excepteur sint occaecat cupidatat non proident.",
+    "description": null,
     "votingType": "Sujeto",
     "coGovermentType": "Académico",
     "dependency": "Facultad de Derecho",
@@ -36,7 +36,7 @@
   {
     "id": 3,
     "name": "Consejo de Escuela de Ingeniería Civil",
-    "description": "Excepteur sint occaecat cupidatat non proident.",
+    "description": null,
     "votingType": "Sujeto",
     "coGovermentType": "Académico",
     "dependency": "Escuela de Ingeniería Civil",

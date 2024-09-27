@@ -2,16 +2,36 @@
   {
     "id": 1,
     "name": "Publicación de registros electorales",
-    "description": "Excepteur sint occaecat cupidatat non proident."
+    "description": null
   },
   {
     "id": 2,
-    "name": "Impuganaciones y reclamos sobre el registro electoral",
-    "description": "Excepteur sint occaecat cupidatat non proident."
+    "name": "Encuentro con los candidatos",
+    "description": null
   },
   {
     "id": 3,
+    "name": "Publicación del cronograma",
+    "description": null
+  },
+  {
+    "id": 4,
+    "name": "Debates",
+    "description": null
+  },
+  {
+    "id": 5,
+    "name": "Convocatoria",
+    "description": null
+  },
+  {
+    "id": 6,
+    "name": "Impugnaciones y reclamos sobre el registro electoral",
+    "description": null
+  },
+  {
+    "id": 7,
     "name": "Inscripción de candidatos",
-    "description": "Excepteur sint occaecat cupidatat non proident."
+    "description": null
   }
 ]

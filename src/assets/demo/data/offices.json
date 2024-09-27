@@ -2,21 +2,21 @@
   {
     "id": 1,
     "name": "Presidente",
-    "description": "Excepteur sint occaecat cupidatat non proident."
+    "description": null
   },
   {
     "id": 2,
     "name": "Representante Estudiantil",
-    "description": "Excepteur sint occaecat cupidatat non proident."
+    "description": ""
   },
   {
     "id": 3,
     "name": "Representante de Profesores",
-    "description": "Excepteur sint occaecat cupidatat non proident."
+    "description": ""
   },
   {
     "id": 4,
     "name": "Representante de Egresados",
-    "description": "Excepteur sint occaecat cupidatat non proident."
+    "description": ""
   }
 ]

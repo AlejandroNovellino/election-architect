@@ -194,7 +194,7 @@
         pInputText
         rows="4"
         class="flex-auto"
-        [value]="dependencyToShowMoreInfo()?.description"
+        [value]="dependencyToShowMoreInfo()?.description || 'No posee'"
         [disabled]="true"
       ></textarea>
     </div>
